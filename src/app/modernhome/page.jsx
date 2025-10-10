@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SmartDelegationVisual from '@/components/modernhome/SmartDelegationVisual';
+import { DottedSurface } from '@/components/ui/dotted-surface';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,6 +47,7 @@ export default function ModernHome() {
   const [activeFeature, setActiveFeature] = useState(null);
   const [contextualPhase, setContextualPhase] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
   
   // Refs for scroll animations
   const heroRef = useRef(null);
@@ -66,7 +68,10 @@ export default function ModernHome() {
 
   // Navigate to demo page
   const navigateToDemo = () => {
-    router.push('/book-demo');
+    setIsNavigating(true);
+    setTimeout(() => {
+      router.push('/book-demo');
+    }, 500);
   };
 
   const useCases = [
@@ -498,11 +503,11 @@ export default function ModernHome() {
           }
         }
       `}</style>
-    <div className="min-h-screen bg-black text-white" style={{ fontFamily: 'CustomFont, sans-serif' }}>
+    <div className="min-h-screen bg-black text-white overflow-x-hidden" style={{ fontFamily: 'CustomFont, sans-serif' }}>
 
       {/* Navbar */}
-      <nav className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-20 py-6">
-        <div className="flex items-center gap-3">
+      <nav className="relative z-10 flex items-center justify-between md:justify-between px-4 sm:px-8 lg:px-20 py-6">
+        <div className="flex items-center gap-3 mx-auto md:mx-0">
           <Image src="/Images/F2.png" alt="liebeszit Logo" width={32} height={32} className="rounded-md" />
           <div className="text-2xl font-extrabold">LIEBESZIT AI</div>
         </div>
@@ -519,7 +524,7 @@ export default function ModernHome() {
 
       {/* Hero Section */}
       <main ref={heroRef} className="relative flex flex-col items-center justify-center text-center px-4 sm:px-8 mt-10 sm:mt-20 pb-16 sm:pb-32 overflow-hidden">
-
+        <DottedSurface />
 
         {/* Purple Glow Effect - Hero Only */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[150px] parallax-slow" style={{ backgroundColor: 'rgba(0, 11, 88, 0.3)' }} />
@@ -564,27 +569,51 @@ export default function ModernHome() {
 
       {/* Trust Section */}
       <section ref={trustRef} className="relative z-10 mt-16 sm:mt-32 px-4 sm:px-8">
-        <p className="text-center text-gray-400 text-sm mb-12">Over 50+ business trust us</p>
-        <div className="flex items-center justify-center gap-8 sm:gap-16 flex-wrap max-w-5xl mx-auto">
-          {/* Logo 1 */}
-          <div className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
-            <div className="w-8 h-8 bg-gray-600 rounded-lg" />
-            <span className="text-xl font-semibold">Logoipsum</span>
-          </div>
-          {/* Logo 2 */}
-          <div className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
-            <div className="w-8 h-8 bg-gray-600 rounded-full" />
-            <span className="text-xl font-semibold">Logoipsum</span>
-          </div>
-          {/* Logo 3 */}
-          <div className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
-            <div className="w-8 h-8 bg-gray-600 rounded-lg" />
-            <span className="text-xl font-semibold">Logoipsum</span>
-          </div>
-          {/* Logo 4 */}
-          <div className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
-            <div className="w-8 h-8 bg-gray-600 rounded-full" />
-            <span className="text-xl font-semibold">Logoipsum</span>
+        <p className="text-center text-gray-400 text-lg mb-12 font-medium">Integrate tools like</p>
+        <div className="relative overflow-hidden max-w-6xl mx-auto">
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
+          <div className="flex animate-scroll gap-8">
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/slack.png" alt="Slack" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">Slack</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/jira.png" alt="Jira" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">Jira</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/asana.png" alt="Asana" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">Asana</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/github.png" alt="GitHub" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">GitHub</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/google-calendar.png" alt="Calendar" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">Calendar</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/slack.png" alt="Slack" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">Slack</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/jira.png" alt="Jira" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">Jira</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/asana.png" alt="Asana" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">Asana</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/github.png" alt="GitHub" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">GitHub</span>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0 px-6 py-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <Image src="/Images/google-calendar.png" alt="Calendar" width={32} height={32} className="object-contain" />
+              <span className="text-white font-medium">Calendar</span>
+            </div>
           </div>
         </div>
       </section>
@@ -605,9 +634,9 @@ export default function ModernHome() {
         </p>
 
         {/* Feature Card */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center animate-on-scroll">
+        <div className="max-w-6xl mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center animate-on-scroll">
           {/* Left Side - Outer Container */}
-          <div className="w-full h-[300px] sm:h-[400px] border border-gray-800 rounded-2xl bg-black/20 p-4 sm:p-6 flex items-start justify-center overflow-hidden">
+          <div className="w-full h-[300px] sm:h-[400px] border border-gray-800 rounded-2xl bg-black/20 p-4 sm:p-6 flex items-start justify-center overflow-hidden order-2 lg:order-1">
             {/* Window Interface with Fade */}
             <div className="relative w-full max-w-sm">
               <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl overflow-hidden">
@@ -685,7 +714,7 @@ export default function ModernHome() {
           </div>
 
           {/* Right Side - Content */}
-          <div>
+          <div className="order-1 lg:order-2">
             <div className="inline-block bg-[#0a0a0a] border border-gray-700 rounded-lg px-5 py-2 mb-6">
               <span className="text-sm text-white">Clarity Engine</span>
             </div>
@@ -713,10 +742,10 @@ Clear Briefs
       </section>
 {/**this is the swap */}
 
-<section ref={visibilityRef} className="relative z-10 mt-32 px-8">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 gap-16 items-center">
+<section ref={visibilityRef} className="relative z-10 mt-16 sm:mt-32 px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Side - Content */}
-          <div className="animate-on-scroll">
+          <div className="animate-on-scroll order-1 lg:order-1">
             <div className="inline-block bg-[#0a0a0a] border border-gray-700 rounded-lg px-5 py-2 mb-8">
               <span className="text-sm text-white font-medium">Visibility Hub</span>
             </div>
@@ -742,7 +771,7 @@ Instant Reports
           </div>
 
           {/* Right Side - AI Dashboard */}
-          <div className="w-full h-[400px] border border-gray-800 rounded-2xl bg-black/20 p-6 flex items-start justify-center overflow-hidden animate-on-scroll">
+          <div className="w-full h-[300px] sm:h-[400px] border border-gray-800 rounded-2xl bg-black/20 p-4 sm:p-6 flex items-start justify-center overflow-hidden animate-on-scroll order-2 lg:order-2">
             <div className="relative w-full max-w-sm">
               <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl overflow-hidden">
                 <div className="bg-gray-900/80 border-b border-gray-800 px-3 py-2 flex items-center gap-2">
@@ -826,15 +855,15 @@ Instant Reports
 
 
       {/* Engineering & Execution Support Section */}
-      <section ref={delegationRef} className="relative z-10 mt-32 px-8">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 gap-16 items-center">
+      <section ref={delegationRef} className="relative z-10 mt-16 sm:mt-32 px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Side - Smart Delegation Visual */}
-          <div className="animate-on-scroll">
+          <div className="animate-on-scroll order-2 lg:order-1">
             <SmartDelegationVisual activeFeature={activeFeature} />
           </div>
 
           {/* Right Side - Content */}
-          <div className="animate-on-scroll">
+          <div className="animate-on-scroll order-1 lg:order-2">
             <div className="inline-block bg-[#0a0a0a] border border-gray-700 rounded-lg px-5 py-2 mb-8">
               <span className="text-sm text-white font-medium">Smart Delegation</span>
             </div>
@@ -885,10 +914,10 @@ Live Sync
 
       
       {/* The liebeszit Advantage Section */}
-      <section ref={guidanceRef} className="relative z-10 mt-32 px-8">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 gap-16 items-center">
+      <section ref={guidanceRef} className="relative z-10 mt-16 sm:mt-32 px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Side - Content */}
-          <div className="guidance-content">
+          <div className="guidance-content order-1 lg:order-1">
             <div className="inline-block bg-[#0a0a0a] border border-gray-700 rounded-lg px-5 py-2 mb-8">
               <span className="text-sm text-white font-medium">Contextual Support</span>
             </div>
@@ -914,7 +943,7 @@ Faster Delivery
           </div>
 
           {/* Right Side - Contextual Support Visual */}
-          <div className="w-full h-[400px] border border-gray-800 rounded-2xl bg-black/20 p-6 flex items-start justify-center overflow-hidden guidance-visual">
+          <div className="w-full h-[300px] sm:h-[400px] border border-gray-800 rounded-2xl bg-black/20 p-4 sm:p-6 flex items-start justify-center overflow-hidden guidance-visual order-2 lg:order-2">
             <div className="relative w-full max-w-sm">
               <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl overflow-hidden">
                 {/* Window Header */}
@@ -1032,42 +1061,42 @@ Faster Delivery
           {/* Benefits Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Benefit 1 */}
-            <div className="benefit-card bg-gradient-to-br from-[#4C3BCF]/40 via-black to-black border border-gray-800/50 rounded-2xl p-4 sm:p-8 text-left hover:border-[#4C3BCF]/30 transition-all duration-300 hover-lift">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center mb-4 sm:mb-6">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
+            <div className="benefit-card bg-gradient-to-br from-[#4C3BCF]/40 via-black to-black border border-gray-800/50 rounded-2xl p-8 text-left hover:border-[#4C3BCF]/30 transition-all duration-300 hover-lift">
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-6">
+                <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="benefit-title text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 leading-tight">Task Clarity</h3>
-              <p className="benefit-text text-gray-400 text-xs sm:text-sm leading-relaxed font-light">
-                Validated briefs eliminate rework costs
+              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Task Clarity Without<br />Endless Back-and-Forth</h3>
+              <p className="text-gray-400 text-sm leading-relaxed font-light">
+                liebeszit's Clarity Engine validates every brief before work begins, ensuring your team understands exactly what needs to be done. This eliminates costly rework cycles and prevents the miscommunication that derails timelines and budgets.
               </p>
             </div>
 
             {/* Benefit 2 */}
-            <div className="benefit-card bg-gradient-to-br from-[#4C3BCF]/40 via-black to-black border border-gray-800/50 rounded-2xl p-4 sm:p-8 text-left hover:border-[#4C3BCF]/30 transition-all duration-300 hover-lift">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center mb-4 sm:mb-6">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
+            <div className="benefit-card bg-gradient-to-br from-[#4C3BCF]/40 via-black to-black border border-gray-800/50 rounded-2xl p-8 text-left hover:border-[#4C3BCF]/30 transition-all duration-300 hover-lift">
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-6">
+                <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                   <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="benefit-title text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 leading-tight">Time Savings</h3>
-              <p className="benefit-text text-gray-400 text-xs sm:text-sm leading-relaxed font-light">
-                Automates tracking, cuts admin burden
+              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Time Savings Through<br />Automated Oversight</h3>
+              <p className="text-gray-400 text-sm leading-relaxed font-light">
+                Stop wasting hours on status meetings and manual follow-ups. liebeszit automatically tracks progress across all your tools and delivers AI-generated summaries, giving you instant visibility without the administrative overhead.
               </p>
             </div>
 
             {/* Benefit 3 */}
-            <div className="benefit-card bg-gradient-to-br from-[#4C3BCF]/40 via-black to-black border border-gray-800/50 rounded-2xl p-4 sm:p-8 text-left hover:border-[#4C3BCF]/30 transition-all duration-300 hover-lift">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-full flex items-center justify-center mb-4 sm:mb-6">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
+            <div className="benefit-card bg-gradient-to-br from-[#4C3BCF]/40 via-black to-black border border-gray-800/50 rounded-2xl p-8 text-left hover:border-[#4C3BCF]/30 transition-all duration-300 hover-lift">
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-6">
+                <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="benefit-title text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3 leading-tight">No Bottlenecks</h3>
-              <p className="benefit-text text-gray-400 text-xs sm:text-sm leading-relaxed font-light">
-                Smart delegation keeps work flowing
+              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">No Bottlenecks, Just<br />Continuous Flow</h3>
+              <p className="text-gray-400 text-sm leading-relaxed font-light">
+                liebeszit's intelligent delegation system assigns tasks based on real workload data and skill sets, preventing team burnout and ensuring balanced distribution. Work flows smoothly without you becoming the operational bottleneck.
               </p>
             </div>
 
@@ -1231,7 +1260,7 @@ Faster Delivery
               </div>
             </div>
 
-            {/* Right - Links, Pages, Socials */}
+            {/* Right - Links, Socials */}
             <div className="flex flex-col sm:flex-row gap-8 sm:gap-16 w-full lg:w-auto">
               {/* Links */}
               <div>
@@ -1244,25 +1273,13 @@ Faster Delivery
                 </ul>
               </div>
 
-              {/* Pages */}
-              <div>
-                <h4 className="text-white font-semibold mb-4">Pages</h4>
-                <ul className="space-y-3">
-                  <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Home</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">About</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Blog</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Contact</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">404</a></li>
-                </ul>
-              </div>
-
               {/* Socials */}
               <div>
                 <h4 className="text-white font-semibold mb-4">Socials</h4>
                 <ul className="space-y-3">
-                  <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Instagram</a></li>
+                  <li><a href="https://www.instagram.com/5yed_ateef/#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm">Instagram</a></li>
                   <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Facebook</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Linkedin</a></li>
+                  <li><a href="https://www.linkedin.com/in/syed-ateef-quadri-v-4a55ab318/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm">Linkedin</a></li>
                   <li><a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Twitter</a></li>
                 </ul>
               </div>
@@ -1274,12 +1291,23 @@ Faster Delivery
         {/* Bottom Bar - Full Width */}
         <div className="border-t border-gray-800 mt-16 -mx-8">
           <div className="max-w-7xl mx-auto px-8 pt-8 flex items-center justify-center">
-            <p className="text-gray-400 text-sm">Visioned and Crafted by <span className="text-white">Syed Ateef</span></p>
+            <p className="text-gray-400 text-sm">Made with ❤️ by <span className="text-white">Syed Ateef</span></p>
           </div>
         </div>
       </footer>
 
-
+      {/* Loading Overlay */}
+      {isNavigating && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4">
+            <div className="relative w-16 h-16">
+              <div className="absolute inset-0 border-4 border-[#4C3BCF]/30 rounded-full"></div>
+              <div className="absolute inset-0 border-4 border-transparent border-t-[#4C3BCF] rounded-full animate-spin"></div>
+            </div>
+            <p className="text-white text-sm">Loading...</p>
+          </div>
+        </div>
+      )}
     </div>
     </>
   );

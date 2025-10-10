@@ -1,6 +1,9 @@
+import { DottedSurface } from '../ui/dotted-surface';
+
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen bg-black overflow-hidden">
+      <DottedSurface />
       {/* Animated Starfield Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-purple-900/30 via-purple-800/20 to-black"></div>

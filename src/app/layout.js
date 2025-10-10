@@ -33,8 +33,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="theme-color" content="#1E3A8A" />
+        <link rel="icon" href="/Images/F2.png" />
+        <meta name="theme-color" content="#4C3BCF" />
       </head>
       <body className="font-inter antialiased">
         {children}

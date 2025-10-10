@@ -8,30 +8,33 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "liebeszit - AI-Powered Project Management",
-  description: "Transform ideas into executed projects with AI. liebeszit is your co-pilot that turns natural language commands into organized projects, automates tasks, and enables seamless team coordination.",
+  title: "Liebeszit | Autonomous AI Project Manager",
+  description: "Stop burning cash on inefficiency. Liebeszit is an AI Project Manager that automates tasks, eliminates stand-ups, and reclaims your team's lost time.",
   keywords: "AI project management, project planning, team collaboration, task automation, productivity tools",
   authors: [{ name: "liebeszit Team" }],
   creator: "liebeszit",
   publisher: "liebeszit",
   robots: "index, follow",
   openGraph: {
-    title: "liebeszit - AI-Powered Project Management",
-    description: "Transform ideas into executed projects with AI",
     type: "website",
+    url: "https://liebeszit.ch/",
+    title: "Liebeszit | Autonomous AI Project Manager",
+    description: "Stop burning cash on inefficiency. Liebeszit is an AI Project Manager that automates tasks, eliminates stand-ups, and reclaims your team's lost time.",
+    siteName: "liebeszit",
     locale: "en_US",
     images: [{
-      url: "/Images/F2.png",
+      url: "https://liebeszit.ch/Images/F2.png",
       width: 1200,
-      height: 630,
-      alt: "liebeszit Logo",
+      height: 628,
+      alt: "liebeszit - AI Operational Co-Pilot",
     }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "liebeszit - AI-Powered Project Management",
-    description: "Transform ideas into executed projects with AI",
-    images: ["/Images/F2.png"],
+    url: "https://liebeszit.ch/",
+    title: "Liebeszit | Autonomous AI Project Manager",
+    description: "Stop burning cash on inefficiency. Liebeszit is an AI Project Manager that automates tasks, eliminates stand-ups, and reclaims your team's lost time.",
+    images: ["https://liebeszit.ch/Images/F2.png"],
   },
   viewport: "width=device-width, initial-scale=1",
 };
@@ -41,9 +44,21 @@ export default function RootLayout({ children }) {
     <html lang="en" className={inter.variable}>
       <head>
         <link rel="icon" href="/Images/F2.png" />
+        <link rel="apple-touch-icon" href="/Images/F2.png" />
         <meta name="theme-color" content="#4C3BCF" />
-        <meta property="og:image" content="/Images/F2.png" />
-        <meta name="twitter:image" content="/Images/F2.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://liebeszit.ch/" />
+        <meta property="og:title" content="Liebeszit | Autonomous AI Project Manager" />
+        <meta property="og:description" content="Stop burning cash on inefficiency. Liebeszit is an AI Project Manager that automates tasks, eliminates stand-ups, and reclaims your team's lost time." />
+        <meta property="og:image" content="https://liebeszit.ch/Images/F2.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="628" />
+        <meta property="og:image:alt" content="liebeszit - AI Operational Co-Pilot" />
+        <meta name="twitter:url" content="https://liebeszit.ch/" />
+        <meta name="twitter:title" content="Liebeszit | Autonomous AI Project Manager" />
+        <meta name="twitter:description" content="Stop burning cash on inefficiency. Liebeszit is an AI Project Manager that automates tasks, eliminates stand-ups, and reclaims your team's lost time." />
+        <meta name="twitter:image" content="https://liebeszit.ch/Images/F2.png" />
+        <meta name="twitter:card" content="summary_large_image" />
       </head>
       <body className="font-inter antialiased">
         {children}

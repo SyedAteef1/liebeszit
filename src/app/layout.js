@@ -20,11 +20,18 @@ export const metadata = {
     description: "Transform ideas into executed projects with AI",
     type: "website",
     locale: "en_US",
+    images: [{
+      url: "/Images/F2.png",
+      width: 1200,
+      height: 630,
+      alt: "liebeszit Logo",
+    }],
   },
   twitter: {
     card: "summary_large_image",
     title: "liebeszit - AI-Powered Project Management",
     description: "Transform ideas into executed projects with AI",
+    images: ["/Images/F2.png"],
   },
   viewport: "width=device-width, initial-scale=1",
 };
@@ -35,6 +42,8 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/Images/F2.png" />
         <meta name="theme-color" content="#4C3BCF" />
+        <meta property="og:image" content="/Images/F2.png" />
+        <meta name="twitter:image" content="/Images/F2.png" />
       </head>
       <body className="font-inter antialiased">
         {children}

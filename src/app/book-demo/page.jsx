@@ -118,15 +118,16 @@ export default function BookDemo() {
         }
       `}</style>
       
-      <div className="min-h-screen bg-black text-white" style={{ fontFamily: 'CustomFont, sans-serif' }}>
+      <div className="h-screen bg-black text-white overflow-hidden" style={{ fontFamily: 'CustomFont, sans-serif' }}>
         {/* Navbar */}
         <nav className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-20 py-6">
           <div className="flex items-center gap-3">
             <Image src="/Images/F2.png" alt="Feeta Logo" width={32} height={32} className="rounded-md" />
-            <div className="text-xl sm:text-2xl font-extrabold">FEETA AI</div>
+            <div className="text-xl sm:text-2xl font-extrabold">Liebeszit AI</div>
           </div>
           
-          {/* Desktop Menu */}
+          {/* Menu options commented out for now (uncomment karle if u need it) */}
+          {/*
           <div className="hidden md:flex items-center gap-6 lg:gap-8">
             <button onClick={() => router.push('/modernhome')} className="hover:text-[#4C3BCF] transition-colors text-sm lg:text-base focus:outline-none">Home</button>
             <a href="#" className="hover:text-[#4C3BCF] transition-colors text-sm lg:text-base focus:outline-none">About</a>
@@ -137,15 +138,16 @@ export default function BookDemo() {
             </button>
           </div>
           
-          {/* Mobile Menu Button */}
           <button className="md:hidden p-2 focus:outline-none" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
+          */}
         </nav>
         
-        {/* Mobile Menu */}
+        {/* Mobile menu commented out for now */}
+        {/*
         <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''} md:hidden`}>
           <div className="flex flex-col items-center justify-center h-full gap-8">
             <button onClick={() => { router.push('/modernhome'); setMobileMenuOpen(false); }} className="text-xl hover:text-[#4C3BCF] transition-colors">Home</button>
@@ -157,9 +159,11 @@ export default function BookDemo() {
             </button>
           </div>
         </div>
+        */}
+
 
         {/* Main Content */}
-        <main className="relative flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-20">
+        <main className="relative flex flex-col items-center justify-center px-4 sm:px-8 flex-1">
           {/* Purple Glow Effect */}
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[150px]" style={{ backgroundColor: 'rgba(0, 11, 88, 0.3)' }} />
           
@@ -273,9 +277,6 @@ export default function BookDemo() {
             </div>
           </div>
         </main>
-        
-        {/* Bottom Black Section */}
-        <div className="bg-black h-32"></div>
       </div>
     </>
   );

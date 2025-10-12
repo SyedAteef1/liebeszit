@@ -524,7 +524,7 @@ export default function ModernHome() {
 
       {/* Hero Section */}
       <main ref={heroRef} className="relative flex flex-col items-center justify-center text-center px-4 sm:px-8 mt-10 sm:mt-20 pb-16 sm:pb-32 overflow-hidden">
-        <DottedSurface />
+        {typeof window !== 'undefined' && <DottedSurface />}
 
         {/* Purple Glow Effect - Hero Only */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[150px] parallax-slow" style={{ backgroundColor: 'rgba(0, 11, 88, 0.3)' }} />

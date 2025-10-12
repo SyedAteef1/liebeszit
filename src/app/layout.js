@@ -36,7 +36,11 @@ export const metadata = {
     description: "Stop burning cash on inefficiency. Liebeszit is an AI Project Manager that automates tasks, eliminates stand-ups, and reclaims your team's lost time.",
     images: ["https://liebeszit.ch/Images/F.png"],
   },
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }) {

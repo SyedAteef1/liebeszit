@@ -15,7 +15,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
 	} | null>(null);
 
 	useEffect(() => {
-		if (!containerRef.current) return;
+		if (!containerRef.current || typeof window === 'undefined') return;
 
 		const SEPARATION = 150;
 		const AMOUNTX = 40;

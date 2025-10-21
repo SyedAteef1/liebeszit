@@ -2,8 +2,7 @@
 
 import { Card, CardContent, Typography, Stack, LinearProgress, Chip, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { getStatusColor } from '@/app/modern-dashboard/utils';
-import type { Project } from '@/app/modern-dashboard/types';
+import { getStatusColor, type Project } from '@/lib/utils';
 import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined';
 
 const GlassCard = styled(Card)(({ theme }) => ({

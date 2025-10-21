@@ -1,9 +1,9 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
-export default function LoginPage() {
+function LoginForm() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,7 +57,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md p-8">
         <div className="flex items-center justify-center gap-3 mb-8">
           <Image src="/Images/F2.png" alt="Logo" width={48} height={48} className="rounded-md" />
-          <div className="text-3xl font-extrabold">Feeta Ai</div>
+          <div className="text-3xl font-extrabold">Feeta</div>
         </div>
 
         <div className="bg-gray-900 border border-gray-800 rounded-lg p-8">
@@ -130,5 +130,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center text-white">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

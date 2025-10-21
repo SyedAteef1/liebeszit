@@ -188,7 +188,7 @@ export default function ModernHome() {
     animateElements(faqRef.current?.querySelectorAll('.faq-item'), faqRef.current);
     animateElements(ctaRef.current?.children, ctaRef.current);
 
-    // Specific animations for visual elements in "What liebeszit Delivers" sections
+    // Specific animations for visual elements in "What Feeta Delivers" sections
     
     // Services Section - Window interface elements
     const servicesWindow = servicesRef.current?.querySelector('.bg-gradient-to-br.from-gray-900.to-black');
@@ -508,8 +508,8 @@ export default function ModernHome() {
       {/* Navbar */}
       <nav className="relative z-10 flex items-center justify-between md:justify-between px-4 sm:px-8 lg:px-20 py-6">
         <div className="flex items-center gap-3 mx-auto md:mx-0">
-          <Image src="/Images/F2.png" alt="liebeszit Logo" width={32} height={32} className="rounded-md" />
-          <div className="text-2xl font-extrabold">Liebeszit Ai</div>
+          <Image src="/Images/F2.png" alt="Feeta Logo" width={32} height={32} className="rounded-md" />
+          <div className="text-2xl font-extrabold">Feeta Ai</div>
         </div>
         <div className="hidden md:flex items-center gap-4 lg:gap-8">
           <a href="#" className="hover:text-[#4C3BCF] transition-colors focus:outline-none">Home</a>
@@ -543,7 +543,7 @@ export default function ModernHome() {
 
         {/* Subheading */}
         <p className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-3xl mb-10 text-center mx-auto">
-         From founders to product managers, liebeszit turns intent into clear tasks, smart delegation, and real-time progress—without meetings, micromanagement, or chaos.
+         From founders to product managers, Feeta turns intent into clear tasks, smart delegation, and real-time progress—without meetings, micromanagement, or chaos.
         </p>
 
         {/* CTA Buttons */}
@@ -621,7 +621,7 @@ export default function ModernHome() {
       {/* Our Services Section */}
       <section ref={servicesRef} className="relative z-10 mt-16 sm:mt-32 px-4 sm:px-8">
         <div className="text-center mb-12 animate-on-scroll">
-          <span className="inline-block bg-[#0a0a0a] border border-gray-700 px-5 py-2 rounded-lg text-sm text-white">What liebeszit Delivers</span>
+          <span className="inline-block bg-[#0a0a0a] border border-gray-700 px-5 py-2 rounded-lg text-sm text-white">What Feeta Delivers</span>
         </div>
         
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center max-w-4xl mx-auto mb-6 animate-on-scroll">
@@ -630,7 +630,7 @@ export default function ModernHome() {
         </h2>
         
         <p className="text-center text-gray-400 text-base sm:text-lg max-w-3xl mx-auto mb-10 sm:mb-20 animate-on-scroll">
-         liebeszit bridges the gap between intent and execution—helping founders, managers, and teams clarify tasks, automate delegation, and stay aligned without friction.
+         Feeta bridges the gap between intent and execution—helping founders, managers, and teams clarify tasks, automate delegation, and stay aligned without friction.
         </p>
 
         {/* Feature Card */}
@@ -647,7 +647,7 @@ export default function ModernHome() {
                   <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                   <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
                 </div>
-                <span className="text-xs text-gray-400 ml-2">Liebeszit AI</span>
+                <span className="text-xs text-gray-400 ml-2">Feeta AI</span>
               </div>
 
               {/* Window Content */}
@@ -724,7 +724,7 @@ export default function ModernHome() {
             </h3>
             
             <p className="text-gray-400 text-base sm:text-lg mb-8">
-liebeszit transforms vague goals into precise, validated plans through intelligent dialogue. It ensures your ideas are fully understood before work begins—eliminating guesswork, misalignment, and costly rework.       </p>
+Feeta transforms vague goals into precise, validated plans through intelligent dialogue. It ensures your ideas are fully understood before work begins—eliminating guesswork, misalignment, and costly rework.       </p>
 
             <div className="flex flex-wrap gap-2 sm:gap-4">
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm transition-all duration-300 hover:scale-105 hover:bg-gray-800">
@@ -755,7 +755,7 @@ Clear Briefs
             </h3>
             
             <p className="text-gray-400 text-lg mb-10 leading-relaxed">
-liebeszit replaces daily stand-ups and manual reporting with automated updates and concise AI summaries. You see exactly what’s done, what’s blocked, and what’s next—without chasing anyone for status.            </p>
+Feeta replaces daily stand-ups and manual reporting with automated updates and concise AI summaries. You see exactly what’s done, what’s blocked, and what’s next—without chasing anyone for status.            </p>
 
             <div className="flex flex-wrap gap-3">
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
@@ -780,7 +780,7 @@ Instant Reports
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
                   </div>
-                  <span className="text-xs text-gray-400 ml-2">Liebeszit Overview</span>
+                  <span className="text-xs text-gray-400 ml-2">Feeta Overview</span>
                 </div>
                 <div className="p-5">
                   <div className="bg-[#4C3BCF]/10 rounded-xl p-3 border border-[#4C3BCF]/30 mb-4">
@@ -873,7 +873,7 @@ Instant Reports
             </h3>
             
             <p className="text-gray-400 text-lg mb-10 leading-relaxed">
-liebeszit takes high-level objectives and breaks them into actionable sub-tasks—assigning each to the right person based on skill, workload, and timing. Progress syncs automatically from Slack, Jira, and other tools, keeping everyone aligned without micromanagement.
+Feeta takes high-level objectives and breaks them into actionable sub-tasks—assigning each to the right person based on skill, workload, and timing. Progress syncs automatically from Slack, Jira, and other tools, keeping everyone aligned without micromanagement.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -913,7 +913,7 @@ Live Sync
       </section>
 
       
-      {/* The liebeszit Advantage Section */}
+      {/* The Feeta Advantage Section */}
       <section ref={guidanceRef} className="relative z-10 mt-16 sm:mt-32 px-4 sm:px-8">
         <div className="max-w-6xl mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Side - Content */}
@@ -927,7 +927,7 @@ Live Sync
             </h3>
             
             <p className="text-gray-400 text-lg mb-10 leading-relaxed">
-When your team hits a roadblock, liebeszit offers contextual technical guidance drawn from project history—helping developers solve issues quickly without creating dependency or technical debt.</p>
+When your team hits a roadblock, Feeta offers contextual technical guidance drawn from project history—helping developers solve issues quickly without creating dependency or technical debt.</p>
 
             <div className="flex flex-wrap gap-3">
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
@@ -953,7 +953,7 @@ Faster Delivery
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
                   </div>
-                  <span className="text-xs text-gray-400 ml-2">Liebeszit Assistant</span>
+                  <span className="text-xs text-gray-400 ml-2">Feeta Assistant</span>
                 </div>
 
                 {/* Chat Interface */}
@@ -997,7 +997,7 @@ Faster Delivery
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                           </svg>
                         </div>
-                        <span className="text-xs text-[#4C3BCF] font-semibold">Liebeszit AI</span>
+                        <span className="text-xs text-[#4C3BCF] font-semibold">Feeta AI</span>
                       </div>
                       <p className="text-xs text-gray-300 mb-2">Found the issue! You're using the secret key as token key. Let me explain the correct setup.</p>
                     </div>
@@ -1069,7 +1069,7 @@ Faster Delivery
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Task Clarity Without<br />Endless Back-and-Forth</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                liebeszit's Clarity Engine validates every brief before work begins, ensuring your team understands exactly what needs to be done. This eliminates costly rework cycles and prevents the miscommunication that derails timelines and budgets.
+                Feeta's Clarity Engine validates every brief before work begins, ensuring your team understands exactly what needs to be done. This eliminates costly rework cycles and prevents the miscommunication that derails timelines and budgets.
               </p>
             </div>
 
@@ -1083,7 +1083,7 @@ Faster Delivery
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Time Savings Through<br />Automated Oversight</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                Stop wasting hours on status meetings and manual follow-ups. liebeszit automatically tracks progress across all your tools and delivers AI-generated summaries, giving you instant visibility without the administrative overhead.
+                Stop wasting hours on status meetings and manual follow-ups. Feeta automatically tracks progress across all your tools and delivers AI-generated summaries, giving you instant visibility without the administrative overhead.
               </p>
             </div>
 
@@ -1096,7 +1096,7 @@ Faster Delivery
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 leading-tight">No Bottlenecks, Just<br />Continuous Flow</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                liebeszit's intelligent delegation system assigns tasks based on real workload data and skill sets, preventing team burnout and ensuring balanced distribution. Work flows smoothly without you becoming the operational bottleneck.
+                Feeta's intelligent delegation system assigns tasks based on real workload data and skill sets, preventing team burnout and ensuring balanced distribution. Work flows smoothly without you becoming the operational bottleneck.
               </p>
             </div>
 
@@ -1110,7 +1110,7 @@ Faster Delivery
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Rework & Failure Cost<br />Reduction</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                Poor communication causes 80% of project professionals to spend over half their time on rework. liebeszit stops this waste, protecting your limited financial runway
+                Poor communication causes 80% of project professionals to spend over half their time on rework. Feeta stops this waste, protecting your limited financial runway
               </p>
             </div>
 
@@ -1136,7 +1136,7 @@ Faster Delivery
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Shield Against Founder Burnout</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                By offloading operational friction and delegation stress, liebeszit directly counteracts the conditions that lead to founder burnout, cited as a reason for 9% of startup failures
+                By offloading operational friction and delegation stress, Feeta directly counteracts the conditions that lead to founder burnout, cited as a reason for 9% of startup failures
               </p>
             </div>
           </div>
@@ -1167,32 +1167,32 @@ Faster Delivery
           <div className="space-y-4">
             <div className="faq-item">
               <FAQItem 
-                question="How does liebeszit solve the Founder's Execution Gap?"
-                answer="liebeszit automates the operational friction between your high-level intent and your team's execution. It guarantees clarity for every task, intelligently delegates work, and eliminates time wasted on manual follow-up and status meetings. This frees up leaders to focus on strategic work instead of becoming the operational bottleneck"
+                question="How does Feeta solve the Founder's Execution Gap?"
+                answer="Feeta automates the operational friction between your high-level intent and your team's execution. It guarantees clarity for every task, intelligently delegates work, and eliminates time wasted on manual follow-up and status meetings. This frees up leaders to focus on strategic work instead of becoming the operational bottleneck"
               />
             </div>
             <div className="faq-item">
               <FAQItem 
-                question="How quickly can we start using liebeszit?"
-                answer="liebeszit is designed as an AI Operational Layer that integrates seamlessly with your existing tools like Slack and Jira. There is no lengthy implementation or custom development required. You can start automating the delegation and follow-up loop immediately after a quick setup."
+                question="How quickly can we start using Feeta?"
+                answer="Feeta is designed as an AI Operational Layer that integrates seamlessly with your existing tools like Slack and Jira. There is no lengthy implementation or custom development required. You can start automating the delegation and follow-up loop immediately after a quick setup."
               />
             </div>
             <div className="faq-item">
               <FAQItem 
-                question="What makes liebeszit different from project management tools?"
-                answer="Traditional project management tools are passive repositories that require manual updates. liebeszit is an active AI co-pilot that proactively clarifies requirements, intelligently delegates tasks, automates status tracking, and provides synthesized reports—eliminating the manual overhead that bogs down founders."
+                question="What makes Feeta different from project management tools?"
+                answer="Traditional project management tools are passive repositories that require manual updates. Feeta is an active AI co-pilot that proactively clarifies requirements, intelligently delegates tasks, automates status tracking, and provides synthesized reports—eliminating the manual overhead that bogs down founders."
               />
             </div>
             <div className="faq-item">
               <FAQItem 
-                question="Is liebeszit suitable for non-technical teams?"
-                answer="Absolutely. While liebeszit includes a Contextual Coding Assistant for development teams, its core workflow automation and task delegation features benefit any team. The natural language interface makes it accessible to everyone, regardless of technical background."
+                question="Is Feeta suitable for non-technical teams?"
+                answer="Absolutely. While Feeta includes a Contextual Coding Assistant for development teams, its core workflow automation and task delegation features benefit any team. The natural language interface makes it accessible to everyone, regardless of technical background."
               />
             </div>
             <div className="faq-item">
               <FAQItem 
-                question="How does liebeszit ensure data security?"
-                answer="liebeszit follows industry-standard security practices including end-to-end encryption, secure API integrations, and compliance with data protection regulations. Your sensitive business data never leaves your control, and we provide detailed audit logs for full transparency."
+                question="How does Feeta ensure data security?"
+                answer="Feeta follows industry-standard security practices including end-to-end encryption, secure API integrations, and compliance with data protection regulations. Your sensitive business data never leaves your control, and we provide detailed audit logs for full transparency."
               />
             </div>
           </div>
@@ -1238,8 +1238,8 @@ Faster Delivery
             {/* Left - Brand */}
             <div className="max-w-md w-full lg:w-auto">
               <div className="flex items-center gap-3 mb-4">
-                <Image src="/Images/F2.png" alt="liebeszit Logo" width={32} height={32} className="rounded-md" />
-                <h3 className="text-2xl font-extrabold">Liebeszit Ai</h3>
+                <Image src="/Images/F2.png" alt="Feeta Logo" width={32} height={32} className="rounded-md" />
+                <h3 className="text-2xl font-extrabold">Feeta Ai</h3>
               </div>
               <p className="text-gray-400 text-sm mb-8 leading-relaxed">
                 AI Operational Co-Pilot: Guaranteed<br />

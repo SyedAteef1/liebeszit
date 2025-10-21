@@ -119,22 +119,22 @@ button:focus, a:focus {
     outline-offset: 2px;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar for dark mode */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #F1F5F9;
+    background: #1E1E1E;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
+    background: #00A67E;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #94A3B8;
+    background: #22D3EE;
   }
 
   /* Hide scrollbar but keep functionality */

@@ -118,12 +118,12 @@ export default function BookDemo() {
         }
       `}</style>
       
-      <div className="min-h-screen bg-black text-white" style={{ fontFamily: 'CustomFont, sans-serif' }}>
+      <div className="min-h-screen bg-black text-white w-full overflow-x-hidden" style={{ fontFamily: 'CustomFont, sans-serif', margin: 0, padding: 0 }}>
         {/* Navbar */}
-        <nav className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-20 py-6">
+        <nav className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-20 py-6 w-full">
           <div className="flex items-center gap-3">
-            <Image src="/Images/F2.png" alt="Feeta Logo" width={32} height={32} className="rounded-md" />
-            <div className="text-xl sm:text-2xl font-extrabold">FEETA AI</div>
+            <Image src="/Images/F2.png" alt="Logo" width={32} height={32} className="rounded-md" />
+            <div className="text-xl sm:text-2xl font-extrabold">Feeta AI</div>
           </div>
           
           {/* Desktop Menu */}
@@ -159,11 +159,22 @@ export default function BookDemo() {
         </div>
 
         {/* Main Content */}
-        <main className="relative flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-20">
+        <main className="relative flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-20 w-full">
           {/* Purple Glow Effect */}
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[150px]" style={{ backgroundColor: 'rgba(0, 11, 88, 0.3)' }} />
           
           <div className="relative z-10 w-full max-w-md">
+            {/* Back Button */}
+            <button
+              onClick={() => router.push('/modernhome')}
+              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6 focus:outline-none"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Back to Home</span>
+            </button>
+            
             {/* Form Container */}
             <div className="bg-gradient-to-br from-[#4C3BCF]/10 via-black/50 to-black/50 border border-gray-800/30 rounded-2xl p-4 sm:p-8 pb-8 sm:pb-12 backdrop-blur-sm">
               {!isSubmitted ? (
@@ -275,7 +286,7 @@ export default function BookDemo() {
         </main>
         
         {/* Bottom Black Section */}
-        <div className="bg-black h-32"></div>
+        <div className="bg-black h-32 w-full"></div>
       </div>
     </>
   );

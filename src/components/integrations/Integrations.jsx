@@ -23,7 +23,6 @@ export const Integrations = () => {
   }, [searchParams]);
 
   const handleConnect = () => {
-    // Clear any existing session before connecting
     localStorage.removeItem('slack_user_id');
     localStorage.removeItem('slack_team_id');
     window.location.href = "https://localhost:5000/slack/install";

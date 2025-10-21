@@ -1,8 +1,10 @@
 import { GitHubIntegration } from '@/components/integrations/GitHubIntegration'
-import React from 'react'
+import { Suspense } from 'react'
 
 export default function page() {
   return (
-   <GitHubIntegration/>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <GitHubIntegration/>
+    </Suspense>
   )
 }

@@ -181,7 +181,7 @@ export default function TestPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Image src="/Images/F2.png" alt="Logo" width={32} height={32} className="rounded-md" />
-            <div className="text-2xl font-extrabold">Feeta Ai</div>
+            <div className="text-2xl font-extrabold">Feeta AI</div>
           </div>
           <div className="flex items-center gap-6">
             {user && <span className="text-sm text-gray-400">👤 {user.name}</span>}

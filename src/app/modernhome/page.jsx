@@ -509,7 +509,7 @@ export default function ModernHome() {
       <nav className="relative z-10 flex items-center justify-between md:justify-between px-4 sm:px-8 lg:px-20 py-6">
         <div className="flex items-center gap-3 mx-auto md:mx-0">
           <Image src="/Images/F2.png" alt="Feeta Logo" width={32} height={32} className="rounded-md" />
-          <div className="text-2xl font-extrabold">Feeta Ai</div>
+          <div className="text-2xl font-extrabold">Feeta AI</div>
         </div>
         <div className="hidden md:flex items-center gap-4 lg:gap-8">
           <a href="#" className="hover:text-[#4C3BCF] transition-colors focus:outline-none">Home</a>
@@ -1239,7 +1239,7 @@ Faster Delivery
             <div className="max-w-md w-full lg:w-auto">
               <div className="flex items-center gap-3 mb-4">
                 <Image src="/Images/F2.png" alt="Feeta Logo" width={32} height={32} className="rounded-md" />
-                <h3 className="text-2xl font-extrabold">Feeta Ai</h3>
+                <h3 className="text-2xl font-extrabold">Feeta AI</h3>
               </div>
               <p className="text-gray-400 text-sm mb-8 leading-relaxed">
                 AI Operational Co-Pilot: Guaranteed<br />

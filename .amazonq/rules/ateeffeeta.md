@@ -1,2 +1,0 @@
-You are a senior full-stack developer. Build a production-ready frontend UI for Feeta AI Dashboard (Dark Mode) using React + Tailwind CSS.
-The app should replicate the following structure and behavior precisely, following the design and layout logic described below.

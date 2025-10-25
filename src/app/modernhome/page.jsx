@@ -48,6 +48,8 @@ export default function ModernHome() {
   const [contextualPhase, setContextualPhase] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [visibilityDept, setVisibilityDept] = useState(0);
+  const [interventionDept, setInterventionDept] = useState(0);
   
   // Refs for scroll animations
   const heroRef = useRef(null);
@@ -76,30 +78,137 @@ export default function ModernHome() {
 
   const useCases = [
     {
+      department: 'IT',
       input: 'Integrate Stripe payment gateway and launch product today',
       output: [
-        { text: 'Setup Stripe API integration', assignees: ['Syed Ateef'], deadline: 'Dec 20' },
-        { text: 'Design payment UI mockups', assignees: ['Syed Suhail'], deadline: 'Dec 21' },
-        { text: 'Build payment frontend', assignees: ['Md Tousif'], deadline: 'Dec 22' },
-        { text: 'Test payment flow', assignees: ['Kasim'], deadline: 'Dec 23' }
+        { text: 'Setup Stripe API integration', assignees: ['Dev Lead'], deadline: 'Dec 20' },
+        { text: 'Design payment UI mockups', assignees: ['UI Designer'], deadline: 'Dec 21' },
+        { text: 'Build payment frontend', assignees: ['Frontend Dev'], deadline: 'Dec 22' },
+        { text: 'Test payment flow', assignees: ['QA Engineer'], deadline: 'Dec 23' }
       ]
     },
     {
-      input: 'Build user dashboard with analytics',
+      department: 'Sales',
+      input: 'Launch Q4 enterprise outreach campaign for Fortune 500',
       output: [
-        { text: 'Design dashboard UI', assignees: ['Syed Suhail'], deadline: 'Dec 18' },
-        { text: 'Build dashboard components', assignees: ['Md Tousif'], deadline: 'Dec 20' },
-        { text: 'Create analytics API', assignees: ['Syed Ateef'], deadline: 'Dec 21' },
-        { text: 'Test dashboard features', assignees: ['Kasim'], deadline: 'Dec 22' }
+        { text: 'Research target accounts', assignees: ['Sales Ops'], deadline: 'Dec 18' },
+        { text: 'Create pitch deck', assignees: ['Sales Manager'], deadline: 'Dec 19' },
+        { text: 'Schedule demo calls', assignees: ['SDR Team'], deadline: 'Dec 20' },
+        { text: 'Prepare pricing proposals', assignees: ['Sales Finance'], deadline: 'Dec 21' }
       ]
     },
     {
-      input: 'Fix bugs and improve performance',
+      department: 'Marketing',
+      input: 'Create multi-channel product launch campaign',
       output: [
-        { text: 'Optimize database queries', assignees: ['Syed Ateef'], deadline: 'Dec 19' },
-        { text: 'Fix UI rendering issues', assignees: ['Md Tousif'], deadline: 'Dec 20' },
-        { text: 'Run performance tests', assignees: ['Kasim'], deadline: 'Dec 21' },
-        { text: 'Update design system', assignees: ['Syed Suhail'], deadline: 'Dec 22' }
+        { text: 'Draft campaign messaging', assignees: ['Content Writer'], deadline: 'Dec 19' },
+        { text: 'Design social media assets', assignees: ['Graphic Designer'], deadline: 'Dec 20' },
+        { text: 'Setup email automation', assignees: ['Marketing Ops'], deadline: 'Dec 21' },
+        { text: 'Launch paid ads', assignees: ['Growth Manager'], deadline: 'Dec 22' }
+      ]
+    },
+    {
+      department: 'Finance',
+      input: 'Prepare Q4 budget review and forecast for next quarter',
+      output: [
+        { text: 'Collect expense reports', assignees: ['Finance Analyst'], deadline: 'Dec 18' },
+        { text: 'Review vendor contracts', assignees: ['Procurement'], deadline: 'Dec 19' },
+        { text: 'Build financial model', assignees: ['FP&A Manager'], deadline: 'Dec 20' },
+        { text: 'Present to CFO', assignees: ['Finance Director'], deadline: 'Dec 21' }
+      ]
+    }
+  ];
+
+  const visibilityDashboards = [
+    {
+      department: 'IT',
+      summary: '3 deployments completed, 2 bugs in progress',
+      tasks: [
+        { text: 'API Integration', status: 'done', time: '2 mins ago' },
+        { text: 'Frontend Build', status: 'progress', progress: 65 },
+        { text: 'Database Migration', status: 'blocked', alert: 'Credentials needed' },
+        { text: 'Unit Testing', status: 'done', time: '15 mins ago' }
+      ]
+    },
+    {
+      department: 'Sales',
+      summary: '5 demos scheduled, 3 proposals sent',
+      tasks: [
+        { text: 'Fortune 500 Outreach', status: 'done', time: '1 hour ago' },
+        { text: 'Proposal Draft', status: 'progress', progress: 80 },
+        { text: 'Contract Negotiation', status: 'blocked', alert: 'Legal review pending' },
+        { text: 'CRM Update', status: 'done', time: '30 mins ago' }
+      ]
+    },
+    {
+      department: 'Marketing',
+      summary: '2 campaigns live, 4 content pieces ready',
+      tasks: [
+        { text: 'Social Media Campaign', status: 'done', time: '10 mins ago' },
+        { text: 'Email Sequence', status: 'progress', progress: 45 },
+        { text: 'Ad Creative Review', status: 'blocked', alert: 'Budget approval needed' },
+        { text: 'SEO Optimization', status: 'done', time: '1 hour ago' }
+      ]
+    },
+    {
+      department: 'Finance',
+      summary: '4 reports finalized, 1 audit in progress',
+      tasks: [
+        { text: 'Q4 Budget Review', status: 'done', time: '5 mins ago' },
+        { text: 'Expense Reconciliation', status: 'progress', progress: 70 },
+        { text: 'Vendor Payment', status: 'blocked', alert: 'CFO approval required' },
+        { text: 'Financial Forecast', status: 'done', time: '20 mins ago' }
+      ]
+    }
+  ];
+
+  const interventionScenarios = [
+    {
+      department: 'IT',
+      riskType: 'Schedule Slip Detected',
+      riskDetail: 'API Integration - 2 days overdue',
+      riskDesc: 'Payment gateway integration blocked due to credential issues',
+      suggestion: 'Reassign Task to Sarah Chen',
+      reasons: [
+        'Sarah has relevant API integration experience',
+        'Currently at 45% capacity (available)',
+        'Estimated completion: 1 day'
+      ]
+    },
+    {
+      department: 'Sales',
+      riskType: 'Deal Pipeline Risk',
+      riskDetail: 'Enterprise Proposal - Stalled 5 days',
+      riskDesc: 'Fortune 500 proposal stuck in review, potential revenue loss',
+      suggestion: 'Escalate to VP of Sales',
+      reasons: [
+        'VP has existing relationship with prospect',
+        'Proposal value exceeds $500K threshold',
+        'Can expedite legal approval process'
+      ]
+    },
+    {
+      department: 'Marketing',
+      riskType: 'Budget Overrun Alert',
+      riskDetail: 'Q4 Campaign - 120% of budget',
+      riskDesc: 'Ad spend exceeding approved budget, ROI below target',
+      suggestion: 'Pause Underperforming Channels',
+      reasons: [
+        'Display ads showing 40% lower ROI',
+        'Reallocate budget to high-performing social',
+        'Estimated savings: $15K this month'
+      ]
+    },
+    {
+      department: 'Finance',
+      riskType: 'Compliance Issue Detected',
+      riskDetail: 'Vendor Payment - Missing approvals',
+      riskDesc: 'Payment due in 2 days without proper authorization trail',
+      suggestion: 'Request CFO Emergency Approval',
+      reasons: [
+        'Vendor contract requires dual approval',
+        'Late payment triggers 10% penalty',
+        'CFO available for digital sign-off'
       ]
     }
   ];
@@ -347,12 +456,27 @@ export default function ModernHome() {
       setTimeout(() => setContextualPhase(1), 2000); // Show thinking
       setTimeout(() => setContextualPhase(2), 4000); // Show response
       setTimeout(() => setContextualPhase(3), 7000); // Show solution
-      setTimeout(() => setContextualPhase(4), 10000); // Show code
     };
 
     contextualLoop();
-    const interval = setInterval(contextualLoop, 12000);
+    const interval = setInterval(contextualLoop, 10000);
     
+    return () => clearInterval(interval);
+  }, []);
+
+  // Visibility Dashboard Department Cycling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisibilityDept((prev) => (prev + 1) % visibilityDashboards.length);
+    }, 8000); // Change department every 8 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  // Intervention Scenarios Department Cycling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setInterventionDept((prev) => (prev + 1) % interventionScenarios.length);
+    }, 10000); // Change department every 10 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -533,17 +657,17 @@ export default function ModernHome() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-[#4C3BCF]/20 border border-[#4C3BCF]/30 rounded-full px-4 py-1.5 mb-8">
           <span className="bg-[#4C3BCF] text-white text-xs font-semibold -ml-3.5 px-6 -my-1.5 py-1.5 rounded-full">New</span>
-          <span className="text-sm">The AI Operational Co-Pilot</span>
+          <span className="text-sm">The Enterprise Project Agent</span>
         </div>
 
         {/* Main Heading */}
         <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-5xl mb-6">
-          Your Team’s Execution, On Autopilot
+          Autonomy for Speed. Accountability by Design.
         </h1>
 
         {/* Subheading */}
         <p className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-3xl mb-10 text-center mx-auto">
-         From founders to product managers, Feeta turns intent into clear tasks, smart delegation, and real-time progress—without meetings, micromanagement, or chaos.
+         Feeta AI is the only system that translates a document or simple request into a guaranteed, human-approved project plan. It eliminates silo friction by intelligently assigning tasks, tracking progress, and delivering critical alerts across <strong className="text-white"><br/>Sales, Marketing, Finance, and IT.</strong>
         </p>
 
         {/* CTA Buttons */}
@@ -625,12 +749,11 @@ export default function ModernHome() {
         </div>
         
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center max-w-4xl mx-auto mb-6 animate-on-scroll">
-          AI Operational Co-Pilot: Stop<br />
-          Managing Tasks, Start Leading.
+          The Modular AI Suite: From Intent to Human-Verified Execution.
         </h2>
         
         <p className="text-center text-gray-400 text-base sm:text-lg max-w-3xl mx-auto mb-10 sm:mb-20 animate-on-scroll">
-         Feeta bridges the gap between intent and execution—helping founders, managers, and teams clarify tasks, automate delegation, and stay aligned without friction.
+         Feeta bridges the gap between high-level intent and successful outcomes, helping enterprise leaders clarify scope, enforce accountability, and ensure compliance across all cross-functional initiatives.
         </p>
 
         {/* Feature Card */}
@@ -652,59 +775,95 @@ export default function ModernHome() {
 
               {/* Window Content */}
               <div className="p-5">
-                {/* Input Box Inside Window */}
-                <div className="bg-gray-800/60 rounded-2xl p-3 border border-gray-700/50 mb-4">
+                {/* Department Badge */}
+                <div className="mb-3 flex items-center gap-2">
+                  <div className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-500 ${
+                    useCases[currentCase].department === 'IT' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40' :
+                    useCases[currentCase].department === 'Sales' ? 'bg-green-500/20 text-green-400 border border-green-500/40' :
+                    useCases[currentCase].department === 'Marketing' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/40' :
+                    'bg-yellow-500/20 text-yellow-400 border border-yellow-500/40'
+                  }`}>
+                    {useCases[currentCase].department}
+                  </div>
+                  <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                  <span className="text-xs text-gray-500">Cross-functional</span>
+                </div>
+                
+                {/* Input Box Inside Window with glowing effect */}
+                <div className="relative bg-gray-800/60 rounded-2xl p-3 border border-gray-700/50 mb-4 shadow-lg shadow-[#4C3BCF]/10">
+                  <div className="absolute -top-2 -right-2 z-10">
+                    <div className="bg-[#4C3BCF] text-white text-xs px-2 py-0.5 rounded-full shadow-lg animate-pulse">
+                      NL Input
+                    </div>
+                  </div>
                   <p className="text-sm text-white min-h-[20px]">
                     {typedText}
                     {typedText && <span className="inline-block w-0.5 h-4 bg-[#4C3BCF] ml-1 animate-pulse" />}
                   </p>
                 </div>
 
-                {/* AI Processing */}
+                {/* AI Processing with enhanced animation */}
                 {!showOutput && typedText.length === useCases[currentCase].input.length && (
                   <div className="flex items-center justify-center my-3">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 bg-[#4C3BCF]/10 rounded-full px-4 py-2 border border-[#4C3BCF]/30">
                       <div className="w-2 h-2 bg-[#4C3BCF] rounded-full animate-pulse" />
                       <div className="w-2 h-2 bg-[#4C3BCF] rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
                       <div className="w-2 h-2 bg-[#4C3BCF] rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
+                      <span className="text-xs text-[#4C3BCF] ml-2">Clarifying...</span>
                     </div>
                   </div>
                 )}
 
                 {/* Task List - Matching Reference Image */}
                 {showOutput && (
-                  <div className="space-y-2 max-h-64 overflow-y-auto overflow-x-hidden scrollbar-hide">
-                    {useCases[currentCase].output.map((item, idx) => (
-                      <div 
-                        key={idx} 
-                        className={`transition-all duration-500 ${idx < visibleItems ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                      >
-                        <div className="bg-gray-800/40 rounded-xl px-3 py-2.5 border border-gray-700/30 flex items-center justify-between group hover:bg-gray-800/60 transition-colors">
-                          <div className="flex items-center gap-3 flex-1">
-                            <div className="w-7 h-7 bg-gray-700/50 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-xs text-white font-medium">{item.text}</p>
-                              <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                                {item.assignees.map((assignee, aIdx) => (
-                                  <span key={aIdx} className="text-xs text-gray-500">
-                                    {assignee}{aIdx < item.assignees.length - 1 ? ',' : ''}
-                                  </span>
-                                ))}
-                                {item.deadline && (
-                                  <span className="text-xs text-[#4C3BCF] ml-1">• {item.deadline}</span>
-                                )}
+                  <>
+                    <div className="space-y-2 max-h-48 overflow-y-auto overflow-x-hidden scrollbar-hide mb-3">
+                      {useCases[currentCase].output.map((item, idx) => (
+                        <div 
+                          key={idx} 
+                          className={`transition-all duration-500 ${idx < visibleItems ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                        >
+                          <div className="bg-gray-800/40 rounded-xl px-3 py-2.5 border border-gray-700/30 flex items-center justify-between group hover:bg-gray-800/60 transition-colors hover:shadow-lg hover:shadow-[#4C3BCF]/5">
+                            <div className="flex items-center gap-3 flex-1">
+                              <div className="w-7 h-7 bg-[#4C3BCF]/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[#4C3BCF]/20 transition-colors">
+                                <svg className="w-3.5 h-3.5 text-[#4C3BCF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs text-white font-medium">{item.text}</p>
+                                <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                                  {item.assignees.map((assignee, aIdx) => (
+                                    <span key={aIdx} className="text-xs text-gray-500">
+                                      {assignee}{aIdx < item.assignees.length - 1 ? ',' : ''}
+                                    </span>
+                                  ))}
+                                  {item.deadline && (
+                                    <span className="text-xs text-[#4C3BCF] ml-1">• {item.deadline}</span>
+                                  )}
+                                </div>
                               </div>
                             </div>
+                            <div className="w-4 h-4 rounded border-2 border-[#4C3BCF]/50 flex-shrink-0 group-hover:border-[#4C3BCF] transition-colors" />
                           </div>
-                          <div className="w-4 h-4 rounded border-2 border-gray-600 flex-shrink-0" />
                         </div>
+                      ))}
+                    </div>
+                    
+                    {/* Approval Button */}
+                    {visibleItems === useCases[currentCase].output.length && (
+                      <div className="mt-4 animate-fadeIn">
+                        <button className="w-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-2 border-green-500/50 text-green-400 px-4 py-2.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 group">
+                          <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          Approve Scope
+                        </button>
                       </div>
-                    ))}
-                  </div>
+                    )}
+                  </>
                 )}
               </div>
               </div>
@@ -720,18 +879,18 @@ export default function ModernHome() {
             </div>
             
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
-              Intent to Action
+              Intent to Action: Scope Approval Checkpoint
             </h3>
             
             <p className="text-gray-400 text-base sm:text-lg mb-8">
-Feeta transforms vague goals into precise, validated plans through intelligent dialogue. It ensures your ideas are fully understood before work begins—eliminating guesswork, misalignment, and costly rework.       </p>
+Feeta transforms vague goals (documents or natural language) into a precise, multi-step plan. It initiates a <strong className="text-white">clarification dialogue loop</strong> to remove all ambiguity and presents the final scope to the human manager for <strong className="text-white">mandatory approval</strong> before any work is assigned.       </p>
 
             <div className="flex flex-wrap gap-2 sm:gap-4">
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm transition-all duration-300 hover:scale-105 hover:bg-gray-800">
-Clear Briefs
+Clarification Dialogue
               </button>
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm transition-all duration-300 hover:scale-105 hover:bg-gray-800">
-                Smart Validation
+                Mandatory Scope Approval
               </button>
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm transition-all duration-300 hover:scale-105 hover:bg-gray-800">
                 Zero Rework       
@@ -751,21 +910,21 @@ Clear Briefs
             </div>
             
             <h3 className="text-5xl font-bold mb-7 leading-tight tracking-tight">
-              Real-Time Oversight
+              Autonomous Monitoring & Proactive Follow-Up
             </h3>
             
             <p className="text-gray-400 text-lg mb-10 leading-relaxed">
-Feeta replaces daily stand-ups and manual reporting with automated updates and concise AI summaries. You see exactly what’s done, what’s blocked, and what’s next—without chasing anyone for status.            </p>
+Feeta eliminates 'idle time' by constantly tracking task dependencies and autonomously advancing the workflow. It replaces manual status-chasing by proactively approaching assignees via integrated tools (Slack/email) to request updates and deliver concise AI summaries to the manager.            </p>
 
             <div className="flex flex-wrap gap-3">
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
-Instant Reports
+No Idle Time
               </button>
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
-                AI Summaries
+                Multi-Medium Follow-Up
               </button>
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
-                Full Visibility
+                Real-Time Risk Alerts
               </button>
             </div>
           </div>
@@ -783,66 +942,106 @@ Instant Reports
                   <span className="text-xs text-gray-400 ml-2">Feeta Overview</span>
                 </div>
                 <div className="p-5">
-                  <div className="bg-[#4C3BCF]/10 rounded-xl p-3 border border-[#4C3BCF]/30 mb-4">
+                  {/* Department Badge */}
+                  <div className="mb-3 flex items-center gap-2">
+                    <div className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-500 ${
+                      visibilityDashboards[visibilityDept].department === 'IT' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40' :
+                      visibilityDashboards[visibilityDept].department === 'Sales' ? 'bg-green-500/20 text-green-400 border border-green-500/40' :
+                      visibilityDashboards[visibilityDept].department === 'Marketing' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/40' :
+                      'bg-yellow-500/20 text-yellow-400 border border-yellow-500/40'
+                    }`}>
+                      {visibilityDashboards[visibilityDept].department}
+                    </div>
+                    <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span className="text-xs text-gray-500">Real-time tracking</span>
+                  </div>
+                  
+                  {/* Enhanced AI Summary with animated badge */}
+                  <div key={visibilityDept} className="relative bg-gradient-to-br from-[#4C3BCF]/20 via-[#4C3BCF]/10 to-transparent rounded-xl p-3 border border-[#4C3BCF]/40 mb-4 shadow-lg shadow-[#4C3BCF]/10 animate-fadeIn">
+                    <div className="absolute -top-2 -right-2">
+                      <div className="bg-[#4C3BCF] text-white text-xs px-2 py-0.5 rounded-full shadow-lg animate-pulse flex items-center gap-1">
+                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
+                        </svg>
+                        Live
+                      </div>
+                    </div>
                     <div className="flex items-center gap-2 mb-2">
-                      <svg className="w-4 h-4 text-[#4C3BCF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
+                      <div className="w-8 h-8 bg-[#4C3BCF]/20 rounded-lg flex items-center justify-center">
+                        <svg className="w-4 h-4 text-[#4C3BCF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                      </div>
                       <span className="text-xs text-[#4C3BCF] font-semibold">AI Daily Summary</span>
                     </div>
-                    <p className="text-xs text-gray-300">3 tasks completed, 2 in progress</p>
+                    <p className="text-xs text-white font-medium">{visibilityDashboards[visibilityDept].summary}</p>
+                    <div className="mt-2 flex items-center gap-2">
+                      <div className="flex-1 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+                      </div>
+                      <span className="text-xs text-gray-400">60%</span>
+                    </div>
                   </div>
-                  <div className="space-y-2 max-h-64 overflow-y-auto overflow-x-hidden scrollbar-hide">
-                    <div className="bg-green-500/10 rounded-xl px-3 py-2.5 border border-green-500/30">
-                      <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <svg className="w-3.5 h-3.5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs text-white font-medium">API Integration</p>
-                          <span className="text-xs text-green-400">Done</span>
+                  <div key={`tasks-${visibilityDept}`} className="space-y-2 max-h-64 overflow-y-auto overflow-x-hidden scrollbar-hide">
+                    {visibilityDashboards[visibilityDept].tasks.map((task, idx) => (
+                      <div 
+                        key={idx}
+                        className={`rounded-xl px-3 py-2.5 border transition-all hover:shadow-lg group ${
+                          task.status === 'done' ? 'bg-green-500/10 border-green-500/40 hover:border-green-500/60 hover:shadow-green-500/10' :
+                          task.status === 'progress' ? 'bg-blue-500/10 border-blue-500/40 hover:border-blue-500/60 hover:shadow-blue-500/10 relative overflow-hidden' :
+                          'bg-red-500/10 border-red-500/40 hover:border-red-500/60 hover:shadow-red-500/10 relative'
+                        } animate-fadeIn`}
+                        style={{ animationDelay: `${idx * 0.1}s` }}
+                      >
+                        {task.status === 'progress' && (
+                          <div className="absolute top-0 left-0 h-full w-1 bg-blue-500 animate-pulse"></div>
+                        )}
+                        {task.status === 'blocked' && (
+                          <div className="absolute -top-1 -right-1">
+                            <div className="bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full animate-bounce">!</div>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-3">
+                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
+                            task.status === 'done' ? 'bg-green-500/30' :
+                            task.status === 'progress' ? 'bg-blue-500/30' :
+                            'bg-red-500/30'
+                          }`}>
+                            {task.status === 'done' ? (
+                              <svg className="w-3.5 h-3.5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            ) : task.status === 'progress' ? (
+                              <>
+                                <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping absolute"></div>
+                                <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                              </>
+                            ) : (
+                              <svg className="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs text-white font-medium">{task.text}</p>
+                            <div className="flex items-center gap-2">
+                              <span className={`text-xs font-semibold ${
+                                task.status === 'done' ? 'text-green-400' :
+                                task.status === 'progress' ? 'text-blue-400' :
+                                'text-red-400'
+                              }`}>
+                                {task.status === 'done' ? 'Done' : task.status === 'progress' ? 'In Progress' : 'Blocked'}
+                              </span>
+                              <span className="text-xs text-gray-500">
+                                • {task.time || task.alert || `${task.progress}% done`}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="bg-blue-500/10 rounded-xl px-3 py-2.5 border border-blue-500/30">
-                      <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs text-white font-medium">UI Components</p>
-                          <span className="text-xs text-blue-400">In Progress</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-red-500/10 rounded-xl px-3 py-2.5 border border-red-500/30">
-                      <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <svg className="w-3.5 h-3.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                          </svg>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs text-white font-medium">Database Setup</p>
-                          <span className="text-xs text-red-400">Blocked</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-green-500/10 rounded-xl px-3 py-2.5 border border-green-500/30">
-                      <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <svg className="w-3.5 h-3.5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs text-white font-medium">Testing Phase</p>
-                          <span className="text-xs text-green-400">Done</span>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -869,11 +1068,11 @@ Instant Reports
             </div>
             
             <h3 className="text-5xl font-bold mb-7 leading-tight tracking-tight">
-             Automated Delegation & Tracking
+             Intelligent Delegation: Assignment Approval Checkpoint
             </h3>
             
             <p className="text-gray-400 text-lg mb-10 leading-relaxed">
-Feeta takes high-level objectives and breaks them into actionable sub-tasks—assigning each to the right person based on skill, workload, and timing. Progress syncs automatically from Slack, Jira, and other tools, keeping everyone aligned without micromanagement.
+Feeta breaks down tasks and uses specialized agents to recommend the single most qualified and available person—based on skill, role, and real-time workload—across departments. The final delegation plan is always presented to the manager for <strong className="text-white">mandatory sign-off</strong> to ensure accountability and resource balance.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -885,7 +1084,7 @@ Feeta takes high-level objectives and breaks them into actionable sub-tasks—as
                     : 'bg-[#0a0a0a] border-gray-700 hover:border-[#4C3BCF]/50'
                 }`}
               >
-Auto-Assign
+Skill-Based Matching
               </button>
               <button 
                 onClick={() => setActiveFeature(activeFeature === 'balanced' ? null : 'balanced')}
@@ -905,7 +1104,7 @@ Balanced Workloads
                     : 'bg-[#0a0a0a] border-gray-700 hover:border-[#4C3BCF]/50'
                 }`}
               >
-Live Sync
+Mandatory Assignment Approval
               </button>
             </div>
           </div>
@@ -923,21 +1122,21 @@ Live Sync
             </div>
             
             <h3 className="text-5xl font-bold mb-7 leading-tight tracking-tight">
-              Intelligent Developer Guidance
+              Proactive Intervention: Data-Driven Suggestions
             </h3>
             
             <p className="text-gray-400 text-lg mb-10 leading-relaxed">
-When your team hits a roadblock, Feeta offers contextual technical guidance drawn from project history—helping developers solve issues quickly without creating dependency or technical debt.</p>
+When a risk is detected (schedule slip, compliance issue), Feeta generates an objective, data-driven suggestion (e.g., 'Recommend reassigning task X'). The system alerts the responsible manager, who retains full control and must manually <strong className="text-white">Approve</strong> the intervention before the AI executes the change.</p>
 
             <div className="flex flex-wrap gap-3">
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
-Context-Aware
+Intervention Approval
               </button>
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
-Lightweight Help
+Objective Coaching
               </button>
               <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
-Faster Delivery
+Risk Mitigation
               </button>
             </div>
           </div>
@@ -958,77 +1157,111 @@ Faster Delivery
 
                 {/* Chat Interface */}
                 <div className="p-5 space-y-3 max-h-64 overflow-y-auto scrollbar-hide">
-                  {/* Developer Question */}
-                  <div className={`bg-red-500/10 rounded-2xl p-3 border border-red-500/30 transition-all duration-700 ${
+                  {/* Department Badge */}
+                  <div className="mb-3 flex items-center gap-2">
+                    <div className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-500 ${
+                      interventionScenarios[interventionDept].department === 'IT' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40' :
+                      interventionScenarios[interventionDept].department === 'Sales' ? 'bg-green-500/20 text-green-400 border border-green-500/40' :
+                      interventionScenarios[interventionDept].department === 'Marketing' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/40' :
+                      'bg-yellow-500/20 text-yellow-400 border border-yellow-500/40'
+                    }`}>
+                      {interventionScenarios[interventionDept].department}
+                    </div>
+                    <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span className="text-xs text-gray-500">AI intervention</span>
+                  </div>
+                  
+                  {/* Risk Alert */}
+                  <div key={interventionDept} className={`relative bg-red-500/10 rounded-2xl p-3 border border-red-500/40 transition-all duration-700 hover:border-red-500/60 hover:shadow-lg hover:shadow-red-500/10 animate-fadeIn ${
                     contextualPhase >= 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   }`}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-                        <span className="text-xs font-bold text-white">D</span>
+                    <div className="absolute -top-2 -right-2">
+                      <div className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full shadow-lg animate-pulse flex items-center gap-1">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01" />
+                        </svg>
+                        Risk
                       </div>
-                      <span className="text-xs text-red-400">Developer - Payment Error</span>
                     </div>
-                    <p className="text-xs text-white mb-2">Integrated NMI payment gateway but it's not working at all</p>
-                    <div className="bg-black/40 rounded p-2 font-mono text-xs text-red-300">
-                      Error: Authentication failed - Invalid credentials
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-7 h-7 bg-red-500/30 rounded-full flex items-center justify-center shadow-lg shadow-red-500/20">
+                        <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-xs text-red-400 font-semibold">{interventionScenarios[interventionDept].riskType}</span>
+                        <p className="text-xs text-gray-400">{interventionScenarios[interventionDept].riskDetail}</p>
+                      </div>
                     </div>
+                    <p className="text-xs text-white">{interventionScenarios[interventionDept].riskDesc}</p>
                   </div>
 
-                  {/* AI Thinking */}
+                  {/* AI Analyzing */}
                   {contextualPhase === 1 && (
                     <div className="flex items-center justify-center my-3 transition-all duration-500 opacity-100">
-                      <div className="flex items-center gap-1">
-                        <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animate-pulse" />
+                      <div className="bg-[#4C3BCF]/10 rounded-full px-4 py-2 border border-[#4C3BCF]/30 flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animate-ping absolute" />
+                        <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full" />
                         <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
                         <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
+                        <span className="text-xs text-[#4C3BCF] ml-2 font-semibold">Analyzing context...</span>
                       </div>
-                      <span className="text-xs text-gray-400 ml-2">Checking credentials...</span>
                     </div>
                   )}
 
-                  {/* AI Analysis */}
+                  {/* AI Suggestion */}
                   {contextualPhase >= 2 && (
-                    <div className={`bg-[#4C3BCF]/10 rounded-2xl p-3 border border-[#4C3BCF]/30 transition-all duration-700 ${
+                    <div key={`suggestion-${interventionDept}`} className={`relative bg-[#4C3BCF]/10 rounded-2xl p-3 border border-[#4C3BCF]/40 transition-all duration-700 hover:border-[#4C3BCF]/60 animate-fadeIn ${
                       contextualPhase >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                     }`}>
+                      <div className="absolute -top-2 -left-2">
+                        <div className="bg-[#4C3BCF] text-white text-xs px-2 py-0.5 rounded-full shadow-lg">
+                          AI Suggestion
+                        </div>
+                      </div>
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-[#4C3BCF] rounded-full flex items-center justify-center">
-                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        <div className="w-7 h-7 bg-[#4C3BCF]/30 rounded-full flex items-center justify-center shadow-lg shadow-[#4C3BCF]/20">
+                          <svg className="w-4 h-4 text-[#4C3BCF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                           </svg>
                         </div>
-                        <span className="text-xs text-[#4C3BCF] font-semibold">Feeta AI</span>
+                        <span className="text-xs text-[#4C3BCF] font-semibold">Recommended Action</span>
                       </div>
-                      <p className="text-xs text-gray-300 mb-2">Found the issue! You're using the secret key as token key. Let me explain the correct setup.</p>
+                      <p className="text-xs text-white mb-2 font-medium">{interventionScenarios[interventionDept].suggestion}</p>
+                      <div className="bg-gray-900/60 rounded-lg p-2 text-xs text-gray-300 space-y-1">
+                        {interventionScenarios[interventionDept].reasons.map((reason, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <svg className="w-3 h-3 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>{reason}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
 
-                  {/* Solution */}
+                  {/* Manager Approval Interface */}
                   {contextualPhase >= 3 && (
-                    <div className={`bg-green-500/10 rounded-2xl p-3 border border-green-500/30 transition-all duration-700 ${
+                    <div className={`transition-all duration-700 ${
                       contextualPhase >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                     }`}>
-                      <div className="text-xs text-green-400 font-semibold mb-2">NMI Credential Setup:</div>
-                      <div className="space-y-1 text-xs text-gray-300">
-                        <p>• Secret Key = Private Key (server-side only)</p>
-                        <p>• Token Key = Public Key (client-side)</p>
-                        <p>• Never expose secret key in frontend</p>
-                        <p>• Use environment variables properly</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Code Implementation */}
-                  {contextualPhase >= 4 && (
-                    <div className={`bg-gray-900/60 rounded-xl p-3 border border-gray-800/30 transition-all duration-700 ${
-                      contextualPhase >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                    }`}>
-                      <div className="text-xs text-gray-400 mb-2">Correct Setup:</div>
-                      <div className="bg-black/60 rounded p-2 font-mono text-xs space-y-1">
-                        <div><span className="text-gray-500">// .env file</span></div>
-                        <div><span className="text-blue-400">NMI_SECRET_KEY</span><span className="text-gray-400">=</span><span className="text-green-400">your_private_key</span></div>
-                        <div><span className="text-blue-400">NMI_TOKEN_KEY</span><span className="text-gray-400">=</span><span className="text-green-400">your_public_key</span></div>
-                        <div><span className="text-gray-500">// Use secret key server-side only</span></div>
+                      <div className="flex gap-2">
+                        <button className="flex-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-2 border-green-500/50 text-green-400 px-3 py-2 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 group">
+                          <svg className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Approve
+                        </button>
+                        <button className="flex-1 bg-gray-800/40 border-2 border-gray-700/50 text-gray-400 px-3 py-2 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 hover:border-gray-600 hover:shadow-lg hover:shadow-gray-800/20 transition-all duration-300 group">
+                          <svg className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          Override
+                        </button>
                       </div>
                     </div>
                   )}
@@ -1047,15 +1280,15 @@ Faster Delivery
       <section ref={benefitsRef} className="relative z-10 mt-16 sm:mt-32 px-4 sm:px-8 pb-16 sm:pb-32">
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-block bg-[#0a0a0a] border border-gray-700 rounded-lg px-5 py-2 mb-8 animate-on-scroll">
-            <span className="text-sm text-white font-medium">Benefits</span>
+            <span className="text-sm text-white font-medium">Strategic Impact</span>
           </div>
           
           <h2 className="text-2xl sm:text-3xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight animate-on-scroll">
-            AI Co-Pilot Results
+            AI Operator Results: Guaranteed Governance and Speed
           </h2>
           
           <p className="text-gray-400 text-sm sm:text-base lg:text-xl mb-6 sm:mb-16 animate-on-scroll px-4">
-            Transform chaos into seamless execution
+            Transform chaos into seamless, accountable execution across all departments.
           </p>
 
           {/* Benefits Grid */}
@@ -1067,9 +1300,9 @@ Faster Delivery
                   <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Task Clarity Without<br />Endless Back-and-Forth</h3>
+              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Task Clarity Without<br />Costly Rework</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                Feeta's Clarity Engine validates every brief before work begins, ensuring your team understands exactly what needs to be done. This eliminates costly rework cycles and prevents the miscommunication that derails timelines and budgets.
+                Feeta's Clarity Engine validates every brief using a dialogue loop, ensuring the final plan is human-approved before work begins. This eliminates costly rework cycles and prevents the miscommunication that derails timelines and budgets.
               </p>
             </div>
 
@@ -1094,9 +1327,9 @@ Faster Delivery
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">No Bottlenecks, Just<br />Continuous Flow</h3>
+              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Seamless Cross-Functional<br />Flow</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                Feeta's intelligent delegation system assigns tasks based on real workload data and skill sets, preventing team burnout and ensuring balanced distribution. Work flows smoothly without you becoming the operational bottleneck.
+                Feeta's modular agents ensure tasks are instantly handed off to the right person, regardless of their department (Sales to IT). This eliminates silo friction and project bottlenecks for continuous flow.
               </p>
             </div>
 
@@ -1108,9 +1341,9 @@ Faster Delivery
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Rework & Failure Cost<br />Reduction</h3>
+              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Financial & Compliance<br />Risk Reduction</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                Poor communication causes 80% of project professionals to spend over half their time on rework. Feeta stops this waste, protecting your limited financial runway
+                The mandatory approval checkpoints (Scope, Assignment, Intervention) ensure legal and financial accountability remains with a human. Feeta protects your runway by flagging critical compliance risks proactively.
               </p>
             </div>
 
@@ -1121,9 +1354,9 @@ Faster Delivery
                   <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Trust & Accountability (Not<br />Guesswork)</h3>
+              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Trust & Accountability<br />(Not Guesswork)</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                Delegation is based on data, not gut feeling. Automated reporting provides clear, synthesized visibility without the morale-killing effects of micromanagement
+                Delegation is based on data, not gut feeling. Automated reporting provides clear, synthesized visibility. The Human-In-The-Loop design ensures every decision is auditable and traceable to a responsible human owner.
               </p>
             </div>
 
@@ -1134,9 +1367,9 @@ Faster Delivery
                   <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Shield Against Founder Burnout</h3>
+              <h3 className="text-xl font-semibold text-white mb-3 leading-tight">Elevated Leadership<br />Focus</h3>
               <p className="text-gray-400 text-sm leading-relaxed font-light">
-                By offloading operational friction and delegation stress, Feeta directly counteracts the conditions that lead to founder burnout, cited as a reason for 9% of startup failures
+                By offloading operational friction and delegation stress, Feeta allows managers to shift from administrative coordination to strategic decision-making, coaching, and high-value relationship building.
               </p>
             </div>
           </div>
@@ -1160,15 +1393,15 @@ Faster Delivery
           </h2>
           
           <p className="text-gray-400 text-base sm:text-lg mb-10 sm:mb-16 animate-on-scroll">
-            Quick answers to your AI automation questions.
+            Quick answers to your enterprise AI automation questions.
           </p>
 
           {/* FAQ Items */}
           <div className="space-y-4">
             <div className="faq-item">
               <FAQItem 
-                question="How does Feeta solve the Founder's Execution Gap?"
-                answer="Feeta automates the operational friction between your high-level intent and your team's execution. It guarantees clarity for every task, intelligently delegates work, and eliminates time wasted on manual follow-up and status meetings. This frees up leaders to focus on strategic work instead of becoming the operational bottleneck"
+                question="How does Feeta solve the Cross-Functional Execution Gap?"
+                answer="Feeta automates the friction between high-level intent and enterprise-wide execution. It uses specialized, modular agents to guarantee clarity for every task, intelligently delegates work, and eliminates time wasted on manual follow-up across all departments (Sales, Finance, IT). This frees leaders to focus on strategy."
               />
             </div>
             <div className="faq-item">
@@ -1179,20 +1412,20 @@ Faster Delivery
             </div>
             <div className="faq-item">
               <FAQItem 
-                question="What makes Feeta different from project management tools?"
-                answer="Traditional project management tools are passive repositories that require manual updates. Feeta is an active AI co-pilot that proactively clarifies requirements, intelligently delegates tasks, automates status tracking, and provides synthesized reports—eliminating the manual overhead that bogs down founders."
+                question="What makes Feeta different from traditional PM tools?"
+                answer="Traditional tools are passive repositories that require manual updates. Feeta is an active AI co-pilot that proactively clarifies requirements, intelligently recommends assignments, automates status tracking, and provides synthesized reports—all while enforcing mandatory human approvals at every critical stage."
               />
             </div>
             <div className="faq-item">
               <FAQItem 
-                question="Is Feeta suitable for non-technical teams?"
-                answer="Absolutely. While Feeta includes a Contextual Coding Assistant for development teams, its core workflow automation and task delegation features benefit any team. The natural language interface makes it accessible to everyone, regardless of technical background."
+                question="Is Feeta safe for non-technical or financial teams?"
+                answer="Absolutely. Feeta uses specialized, modular agents (e.g., Finance Specialist) with strict data scoping, ensuring the system only accesses relevant data. The mandatory human approval checkpoints (HITL) ensure high-stakes decisions remain in the hands of the human manager."
               />
             </div>
             <div className="faq-item">
               <FAQItem 
-                question="How does Feeta ensure data security?"
-                answer="Feeta follows industry-standard security practices including end-to-end encryption, secure API integrations, and compliance with data protection regulations. Your sensitive business data never leaves your control, and we provide detailed audit logs for full transparency."
+                question="How does Feeta ensure data security and accountability?"
+                answer="Feeta follows industry-standard security practices, including compliance with GDPR and HIPAA. The Modular Agentic Architecture ensures data access is restricted by department, and every action is logged and attributed to a specific human owner, enabling full auditability and transparency."
               />
             </div>
           </div>
@@ -1210,11 +1443,11 @@ Faster Delivery
             
             <div className="relative z-10">
               <h2 className="cta-title text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
-                Start Scaling
+                Start Driving Accountable Execution
               </h2>
               
               <p className="cta-text text-gray-300 text-sm sm:text-base lg:text-lg mb-6 sm:mb-8">
-                See the AI Co-Pilot in action
+                See the AI Operator Suite in action
               </p>
 
               <button onClick={navigateToDemo} className="bg-[#4C3BCF] hover:bg-[#4C3BCF]/80 px-5 py-2 rounded-lg font-medium flex items-center gap-2 mx-auto transition-all duration-300 text-sm floating-element hover:scale-105 hover:shadow-lg hover:shadow-[#4C3BCF]/30">
@@ -1243,7 +1476,7 @@ Faster Delivery
               </div>
               <p className="text-gray-400 text-sm mb-8 leading-relaxed">
                 AI Operational Co-Pilot: Guaranteed<br />
-                Clarity, Flawless Execution.
+                Clarity, Human-Verified Execution.
               </p>
               <div>
                 <p className="text-white font-medium mb-3">Join our newsletter</p>
@@ -1312,3 +1545,4 @@ Faster Delivery
     </>
   );
 }
+

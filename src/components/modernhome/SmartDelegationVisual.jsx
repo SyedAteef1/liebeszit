@@ -5,23 +5,80 @@ import { useState, useEffect, useRef } from 'react';
 export default function SmartDelegationVisual({ activeFeature }) {
   const [isVisible, setIsVisible] = useState(false);
   const [animationPhase, setAnimationPhase] = useState(0);
+  const [deptIndex, setDeptIndex] = useState(0);
   const containerRef = useRef(null);
 
-  // Team members data
-  const teamMembers = [
-    { id: 1, name: 'Sarah', color: '#10B981', workload: 60, skills: ['Frontend', 'UI/UX'] },
-    { id: 2, name: 'David', color: '#F59E0B', workload: 85, skills: ['Backend', 'API'] },
-    { id: 3, name: 'Alex', color: '#3B82F6', workload: 40, skills: ['DevOps', 'Testing'] },
-    { id: 4, name: 'Emma', color: '#8B5CF6', workload: 70, skills: ['Design', 'Frontend'] }
+  // Department-specific data
+  const departments = [
+    {
+      dept: 'IT',
+      goal: 'Launch payment gateway by Friday',
+      teamMembers: [
+        { id: 1, name: 'Sarah C.', color: '#10B981', workload: 60, skills: ['Frontend', 'UI/UX'] },
+        { id: 2, name: 'David L.', color: '#F59E0B', workload: 85, skills: ['Backend', 'API'] },
+        { id: 3, name: 'Alex M.', color: '#3B82F6', workload: 40, skills: ['DevOps', 'Testing'] },
+        { id: 4, name: 'Emma R.', color: '#8B5CF6', workload: 70, skills: ['Design', 'Frontend'] }
+      ],
+      tasks: [
+        { id: 1, title: 'Design payment UI', assignee: 'Emma R.', status: 'done' },
+        { id: 2, title: 'Build API endpoints', assignee: 'David L.', status: 'progress' },
+        { id: 3, title: 'Setup deployment', assignee: 'Alex M.', status: 'todo' },
+        { id: 4, title: 'Frontend integration', assignee: 'Sarah C.', status: 'progress' }
+      ]
+    },
+    {
+      dept: 'Sales',
+      goal: 'Close 5 enterprise deals this quarter',
+      teamMembers: [
+        { id: 1, name: 'Mike T.', color: '#10B981', workload: 45, skills: ['Enterprise Sales', 'Negotiation'] },
+        { id: 2, name: 'Lisa K.', color: '#F59E0B', workload: 90, skills: ['Account Mgmt', 'Strategy'] },
+        { id: 3, name: 'John P.', color: '#3B82F6', workload: 55, skills: ['SDR', 'Prospecting'] },
+        { id: 4, name: 'Rachel S.', color: '#8B5CF6', workload: 65, skills: ['Sales Ops', 'CRM'] }
+      ],
+      tasks: [
+        { id: 1, title: 'Research Fortune 500', assignee: 'John P.', status: 'done' },
+        { id: 2, title: 'Draft proposals', assignee: 'Mike T.', status: 'progress' },
+        { id: 3, title: 'Update CRM', assignee: 'Rachel S.', status: 'todo' },
+        { id: 4, title: 'Schedule demos', assignee: 'Lisa K.', status: 'progress' }
+      ]
+    },
+    {
+      dept: 'Marketing',
+      goal: 'Launch Q4 product campaign',
+      teamMembers: [
+        { id: 1, name: 'Sofia M.', color: '#10B981', workload: 70, skills: ['Content', 'SEO'] },
+        { id: 2, name: 'James B.', color: '#F59E0B', workload: 80, skills: ['Design', 'Branding'] },
+        { id: 3, name: 'Nina W.', color: '#3B82F6', workload: 50, skills: ['Social Media', 'Ads'] },
+        { id: 4, name: 'Tom H.', color: '#8B5CF6', workload: 60, skills: ['Analytics', 'Growth'] }
+      ],
+      tasks: [
+        { id: 1, title: 'Draft messaging', assignee: 'Sofia M.', status: 'done' },
+        { id: 2, title: 'Design ad creatives', assignee: 'James B.', status: 'progress' },
+        { id: 3, title: 'Launch social ads', assignee: 'Nina W.', status: 'todo' },
+        { id: 4, title: 'Setup analytics', assignee: 'Tom H.', status: 'progress' }
+      ]
+    },
+    {
+      dept: 'Finance',
+      goal: 'Complete Q4 budget review by month end',
+      teamMembers: [
+        { id: 1, name: 'Robert F.', color: '#10B981', workload: 55, skills: ['FP&A', 'Forecasting'] },
+        { id: 2, name: 'Diana C.', color: '#F59E0B', workload: 88, skills: ['Controller', 'Compliance'] },
+        { id: 3, name: 'Mark L.', color: '#3B82F6', workload: 42, skills: ['Analyst', 'Reporting'] },
+        { id: 4, name: 'Julia D.', color: '#8B5CF6', workload: 68, skills: ['AP/AR', 'Payroll'] }
+      ],
+      tasks: [
+        { id: 1, title: 'Collect expense reports', assignee: 'Mark L.', status: 'done' },
+        { id: 2, title: 'Review vendor contracts', assignee: 'Julia D.', status: 'progress' },
+        { id: 3, title: 'Build financial model', assignee: 'Robert F.', status: 'todo' },
+        { id: 4, title: 'Compliance audit', assignee: 'Diana C.', status: 'progress' }
+      ]
+    }
   ];
 
-  // Tasks data
-  const tasks = [
-    { id: 1, title: 'Design UI mockups', assignee: 'Emma', status: 'done' },
-    { id: 2, title: 'Build API endpoints', assignee: 'David', status: 'progress' },
-    { id: 3, title: 'Setup deployment', assignee: 'Alex', status: 'todo' },
-    { id: 4, title: 'Implement frontend', assignee: 'Sarah', status: 'progress' }
-  ];
+  const currentDept = departments[deptIndex];
+  const teamMembers = currentDept.teamMembers;
+  const tasks = currentDept.tasks;
 
   // Scroll animation trigger
   useEffect(() => {
@@ -55,6 +112,14 @@ export default function SmartDelegationVisual({ activeFeature }) {
     }
   }, [activeFeature]);
 
+  // Department cycling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDeptIndex((prev) => (prev + 1) % departments.length);
+    }, 9000); // Change department every 9 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   const getWorkloadColor = (workload) => {
     if (workload < 50) return '#10B981';
     if (workload < 80) return '#F59E0B';
@@ -79,23 +144,44 @@ export default function SmartDelegationVisual({ activeFeature }) {
           
           {/* Content */}
           <div className="p-5">
-            {/* Goal Input */}
-            <div className={`bg-gray-800/60 rounded-2xl p-3 border border-gray-700/50 mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            {/* Department Badge */}
+            <div className="mb-3 flex items-center gap-2">
+              <div className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-500 ${
+                currentDept.dept === 'IT' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40' :
+                currentDept.dept === 'Sales' ? 'bg-green-500/20 text-green-400 border border-green-500/40' :
+                currentDept.dept === 'Marketing' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/40' :
+                'bg-yellow-500/20 text-yellow-400 border border-yellow-500/40'
+              }`}>
+                {currentDept.dept}
+              </div>
+              <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span className="text-xs text-gray-500">Team delegation</span>
+            </div>
+            
+            {/* Goal Input with enhanced styling */}
+            <div key={deptIndex} className={`relative bg-gray-800/60 rounded-2xl p-3 border border-gray-700/50 mb-4 transition-all duration-700 shadow-lg shadow-[#4C3BCF]/5 animate-fadeIn ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <div className="absolute -top-2 -right-2">
+                <div className="bg-[#4C3BCF] text-white text-xs px-2 py-0.5 rounded-full shadow-lg animate-pulse">
+                  Project
+                </div>
+              </div>
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-[#4C3BCF] to-[#6B5FE8] rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-[#4C3BCF] to-[#6B5FE8] rounded-lg flex items-center justify-center shadow-lg shadow-[#4C3BCF]/30">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
                 <div className="flex-1">
                   <div className="text-xs text-gray-400 mb-1">High-Level Goal</div>
-                  <div className="text-sm text-white font-semibold">Launch payment gateway by Friday</div>
+                  <div className="text-sm text-white font-semibold">{currentDept.goal}</div>
                 </div>
                 {animationPhase >= 1 && (
-                  <div className="flex gap-1 animate-pulse">
-                    <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full" />
-                    <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animation-delay-200" />
-                    <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animation-delay-400" />
+                  <div className="flex gap-1">
+                    <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animate-bounce" />
+                    <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animate-bounce animation-delay-200" />
+                    <div className="w-1.5 h-1.5 bg-[#4C3BCF] rounded-full animate-bounce animation-delay-400" />
                   </div>
                 )}
               </div>
@@ -103,40 +189,62 @@ export default function SmartDelegationVisual({ activeFeature }) {
 
             {/* Task Breakdown */}
             {activeFeature === 'auto-assign' && animationPhase >= 2 && (
-              <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-hide">
-                <div className="text-xs text-gray-400 mb-3 flex items-center gap-2">
-                  <svg className="w-3 h-3 text-[#4C3BCF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                  Auto-assigning tasks...
-                </div>
-                {tasks.map((task, idx) => (
-                  <div
-                    key={task.id}
-                    className="bg-gray-800/40 rounded-xl px-3 py-2.5 border border-gray-700/30 flex items-center gap-3 transition-all duration-500"
-                    style={{
-                      animation: `slideInLeft 0.5s ease-out ${idx * 0.15}s both`,
-                      opacity: animationPhase >= 3 ? 1 : 0
-                    }}
-                  >
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white`}
-                      style={{ backgroundColor: teamMembers.find(m => m.name === task.assignee)?.color }}>
-                      {task.assignee[0]}
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-xs text-white font-medium">{task.title}</div>
-                      <div className="text-xs text-gray-400">Assigned to {task.assignee}</div>
-                    </div>
-                    <div className={`px-2 py-1 rounded-md text-xs font-medium ${
-                      task.status === 'done' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
-                      task.status === 'progress' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
-                      'bg-gray-500/20 text-gray-400 border border-gray-500/30'
-                    }`}>
-                      {task.status === 'done' ? '✓ Done' : task.status === 'progress' ? '⟳ In Progress' : '○ To Do'}
-                    </div>
+              <>
+                <div className="space-y-2 max-h-48 overflow-y-auto scrollbar-hide mb-3">
+                  <div className="text-xs text-[#4C3BCF] mb-3 flex items-center gap-2 bg-[#4C3BCF]/10 px-3 py-1.5 rounded-lg border border-[#4C3BCF]/30">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    AI analyzing skills & workload...
                   </div>
-                ))}
-              </div>
+                  {tasks.map((task, idx) => (
+                    <div
+                      key={task.id}
+                      className="bg-gray-800/40 rounded-xl px-3 py-2.5 border border-gray-700/30 flex items-center gap-3 transition-all duration-500 hover:border-[#4C3BCF]/40 hover:bg-gray-800/60 hover:shadow-lg hover:shadow-[#4C3BCF]/10 group"
+                      style={{
+                        animation: `slideInLeft 0.5s ease-out ${idx * 0.15}s both`,
+                        opacity: animationPhase >= 3 ? 1 : 0
+                      }}
+                    >
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-lg group-hover:scale-110 transition-transform`}
+                        style={{ 
+                          backgroundColor: teamMembers.find(m => m.name === task.assignee)?.color,
+                          boxShadow: `0 0 10px ${teamMembers.find(m => m.name === task.assignee)?.color}40`
+                        }}>
+                        {task.assignee[0]}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs text-white font-medium">{task.title}</div>
+                        <div className="text-xs text-gray-400 flex items-center gap-1">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                          {task.assignee}
+                        </div>
+                      </div>
+                      <div className={`px-2 py-1 rounded-md text-xs font-medium transition-all ${
+                        task.status === 'done' ? 'bg-green-500/20 text-green-400 border border-green-500/40' :
+                        task.status === 'progress' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40' :
+                        'bg-gray-500/20 text-gray-400 border border-gray-500/40'
+                      }`}>
+                        {task.status === 'done' ? '✓' : task.status === 'progress' ? '⟳' : '○'}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Assignment Approval Button */}
+                {animationPhase >= 3 && (
+                  <div className="mt-4 animate-fadeIn">
+                    <button className="w-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-2 border-green-500/50 text-green-400 px-4 py-2.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 group">
+                      <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Approve Assignments
+                    </button>
+                  </div>
+                )}
+              </>
             )}
 
             {/* Default View - Task Cards */}
@@ -181,38 +289,63 @@ export default function SmartDelegationVisual({ activeFeature }) {
           
           {/* Content */}
           <div className="p-5">
+            <div className="bg-[#4C3BCF]/10 rounded-lg px-3 py-2 mb-3 border border-[#4C3BCF]/30">
+              <div className="flex items-center gap-2">
+                <svg className="w-3 h-3 text-[#4C3BCF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <span className="text-xs text-[#4C3BCF] font-semibold">Real-time capacity analysis</span>
+              </div>
+            </div>
             <div className="space-y-3 max-h-64 overflow-y-auto scrollbar-hide">
               {teamMembers.map((member, idx) => (
                 <div
                   key={member.id}
-                  className="bg-gray-800/40 rounded-xl p-3 border border-gray-700/30"
+                  className="bg-gray-800/40 rounded-xl p-3 border border-gray-700/30 hover:border-gray-600/50 transition-all hover:shadow-lg group"
                   style={{
-                    animation: `slideInRight 0.5s ease-out ${idx * 0.1}s both`
+                    animation: `slideInRight 0.5s ease-out ${idx * 0.1}s both`,
+                    boxShadow: `0 0 0 ${getWorkloadColor(member.workload)}00`
                   }}
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white`}
-                      style={{ backgroundColor: member.color }}>
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-lg group-hover:scale-110 transition-transform`}
+                      style={{ 
+                        backgroundColor: member.color,
+                        boxShadow: `0 0 15px ${member.color}60`
+                      }}>
                       {member.name[0]}
                     </div>
                     <div className="flex-1">
-                      <div className="text-xs text-white font-medium">{member.name}</div>
-                      <div className="text-xs text-gray-400">{member.skills.join(', ')}</div>
+                      <div className="text-xs text-white font-semibold">{member.name}</div>
+                      <div className="text-xs text-gray-400 flex items-center gap-1">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                        {member.skills.join(', ')}
+                      </div>
                     </div>
-                    <div className="text-xs font-bold" style={{ color: getWorkloadColor(member.workload) }}>
+                    <div className="text-sm font-bold transition-all" style={{ color: getWorkloadColor(member.workload) }}>
                       {member.workload}%
                     </div>
                   </div>
-                  <div className="relative h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                  <div className="relative h-2 bg-gray-800 rounded-full overflow-hidden">
                     <div
-                      className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000"
+                      className="absolute top-0 left-0 h-full rounded-full transition-all duration-1000 animate-pulse"
                       style={{
                         width: `${member.workload}%`,
                         backgroundColor: getWorkloadColor(member.workload),
-                        boxShadow: `0 0 10px ${getWorkloadColor(member.workload)}40`
+                        boxShadow: `0 0 10px ${getWorkloadColor(member.workload)}60`
                       }}
                     />
                   </div>
+                  {member.workload > 80 && (
+                    <div className="mt-2 flex items-center gap-1 text-xs text-red-400">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      Near capacity
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

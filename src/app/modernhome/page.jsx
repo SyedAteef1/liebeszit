@@ -873,28 +873,28 @@ export default function ModernHome() {
           </div>
 
           {/* Right Side - Content */}
-          <div className="order-1 lg:order-2">
-            <div className="inline-block bg-[#0a0a0a] border border-gray-700 rounded-lg px-5 py-2 mb-6">
-              <span className="text-sm text-white">Clarity Engine</span>
+          <div className="animate-on-scroll order-1 lg:order-2">
+            <div className="inline-block bg-[#0a0a0a] border border-gray-700 rounded-lg px-5 py-2 mb-8">
+              <span className="text-sm text-white font-medium">Clarity Engine</span>
             </div>
             
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-7 leading-tight tracking-tight">
               Intent to Action: Scope Approval Checkpoint
             </h3>
             
-            <p className="text-gray-400 text-base sm:text-lg mb-8">
+            <p className="text-gray-400 text-lg mb-10 leading-relaxed">
 Feeta transforms vague goals (documents or natural language) into a precise, multi-step plan. It initiates a <strong className="text-white">clarification dialogue loop</strong> to remove all ambiguity and presents the final scope to the human manager for <strong className="text-white">mandatory approval</strong> before any work is assigned.       </p>
 
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm transition-all duration-300 hover:scale-105 hover:bg-gray-800">
-Clarification Dialogue
+            <div className="flex flex-wrap gap-3">
+              <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
+                Clarification Dialogue
               </button>
-              <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm transition-all duration-300 hover:scale-105 hover:bg-gray-800">
+              <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
                 Mandatory Scope Approval
               </button>
-              <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm transition-all duration-300 hover:scale-105 hover:bg-gray-800">
-                Zero Rework       
-                       </button>
+              <button className="bg-[#0a0a0a] border border-gray-700 hover:border-gray-600 px-5 py-2 rounded-lg text-sm font-medium transition-colors">
+                Zero Rework
+              </button>
             </div>
           </div>
         </div>
@@ -909,7 +909,7 @@ Clarification Dialogue
               <span className="text-sm text-white font-medium">Visibility Hub</span>
             </div>
             
-            <h3 className="text-5xl font-bold mb-7 leading-tight tracking-tight">
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-7 leading-tight tracking-tight">
               Autonomous Monitoring & Proactive Follow-Up
             </h3>
             
@@ -1067,7 +1067,7 @@ No Idle Time
               <span className="text-sm text-white font-medium">Smart Delegation</span>
             </div>
             
-            <h3 className="text-5xl font-bold mb-7 leading-tight tracking-tight">
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-7 leading-tight tracking-tight">
              Intelligent Delegation: Assignment Approval Checkpoint
             </h3>
             
@@ -1121,7 +1121,7 @@ Mandatory Assignment Approval
               <span className="text-sm text-white font-medium">Contextual Support</span>
             </div>
             
-            <h3 className="text-5xl font-bold mb-7 leading-tight tracking-tight">
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-7 leading-tight tracking-tight">
               Proactive Intervention: Data-Driven Suggestions
             </h3>
             

@@ -27,10 +27,11 @@ export default function SlackConnectButton() {
     }
 
     try {
-      const res = await fetch('https://localhost:5000/api/slack/status', {
+      const res = await fetch('https://localhost:5000/slack/api/status', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
+      console.log('Slack status response:', data);
       setSlackConnected(data.connected);
       if (data.connected) {
         localStorage.setItem('slack_user_id', data.slack_user_id);
@@ -63,7 +64,12 @@ export default function SlackConnectButton() {
   };
 
   const handleConnect = () => {
-    window.location.href = 'https://localhost:5000/slack/install';
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("Please login first");
+      return;
+    }
+    window.location.href = `https://localhost:5000/slack/install?token=${token}`;
   };
 
   if (checking) return null;

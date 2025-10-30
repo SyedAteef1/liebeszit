@@ -658,90 +658,94 @@ export default function TestPage() {
   };
 
   return (
-    <div className="flex h-screen bg-[#212121] text-white">
+    <div className="flex h-screen bg-[#0a0a0a] text-white overflow-hidden">
       {/* Sidebar */}
-      <div className={`${showSidebar ? 'w-64' : 'w-0'} transition-all duration-300 bg-[#171717] flex flex-col border-r border-gray-700 overflow-hidden`}>
-        <div className="p-3 space-y-2">
-          <div className="flex items-center gap-2 px-3 py-2 mb-2">
-            <Image src="/Images/F2.png" alt="Logo" width={28} height={28} className="rounded-md" />
-            <div className="text-lg font-bold">Feeta AI</div>
-          </div>
-
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border border-gray-600 hover:bg-gray-700 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+      <div className={`${showSidebar ? 'w-60' : 'w-0'} transition-all duration-300 bg-[#111111] flex flex-col border-r border-[#1a1a1a] overflow-hidden`}>
+        <div className="flex items-center gap-2 px-5 py-6 border-b border-[#1a1a1a]">
+          <Image src="/Images/F2.png" alt="Logo" width={32} height={32} className="rounded-lg" />
+          <span className="font-semibold text-base">Feeta AI</span>
+          <button className="ml-auto text-gray-500 hover:text-gray-300">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M13 8H3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
-            <span className="text-sm">New project</span>
           </button>
         </div>
 
+        <div className="px-4 py-4 space-y-1">
+
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="w-full flex items-center gap-3 px-3 py-2 text-sm bg-white text-black hover:bg-gray-200 rounded-lg transition-colors font-medium"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <span>New Project</span>
+          </button>
+        </div>
+
+        <div className="h-px bg-[#1a1a1a] mx-4 my-2"></div>
+
         {/* Projects List */}
-        <div className="flex-1 overflow-y-auto px-2">
-          <div className="py-2">
-            <div className="px-3 py-2 text-xs font-semibold text-gray-400">Your Projects</div>
-            {projects.length === 0 ? (
-              <div className="px-3 py-4 text-xs text-gray-500 text-center">
-                No projects yet. Create one to get started!
-              </div>
-            ) : (
-              projects.map((project) => (
-                <button
-                  key={project.id}
-                  onClick={() => selectProject(project)}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm hover:bg-gray-700 transition-colors mb-1 ${
-                    selectedProject?.id === project.id ? 'bg-gray-700' : ''
-                  }`}
-                >
-                  <div className="truncate font-medium">{project.name}</div>
-                  {project.repo && (
-                    <div className="text-xs text-gray-400 truncate mt-1">
-                      📁 {project.repo.name}
-                    </div>
-                  )}
-                  {project.messages && project.messages.length > 0 && (
-                    <div className="text-xs text-gray-500 mt-1">
-                      {project.messages.length} messages
-                    </div>
-                  )}
-                </button>
-              ))
-            )}
-          </div>
-          </div>
+        <div className="flex-1 overflow-y-auto px-4 py-2 space-y-1">
+          <div className="text-xs text-gray-500 px-3 pb-2">Your Projects</div>
+          {projects.length === 0 ? (
+            <div className="px-3 py-4 text-xs text-gray-500 text-center">
+              No projects yet
+            </div>
+          ) : (
+            projects.map((project) => (
+              <button
+                key={project.id}
+                onClick={() => selectProject(project)}
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  selectedProject?.id === project.id ? 'bg-[#1a1a1a] text-white' : 'text-gray-400 hover:text-white hover:bg-[#1a1a1a]'
+                }`}
+              >
+                <div className="truncate font-medium">{project.name}</div>
+                {project.repo && (
+                  <div className="text-xs text-gray-500 truncate mt-0.5">
+                    {project.repo.name}
+                  </div>
+                )}
+              </button>
+            ))
+          )}
+        </div>
 
         {/* Bottom Section */}
-        <div className="p-3 border-t border-gray-700 space-y-2">
+        <div className="border-t border-[#1a1a1a] p-4 space-y-1">
             <button
               onClick={() => router.push('/slack-monitor')}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 transition-colors text-sm font-medium"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:text-white hover:bg-[#1a1a1a] rounded-lg transition-colors"
             >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                <rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                <rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                <rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5"/>
               </svg>
-              📊 Slack Monitor
+              <span>Slack Monitor</span>
             </button>
 
             {!githubConnected && (
               <button
                 onClick={connectGithub}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-colors text-xs"
+                className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-400 hover:text-white hover:bg-[#1a1a1a] rounded-lg transition-colors"
               >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
-                Connect GitHub
+              <span>Connect GitHub</span>
               </button>
             )}
           
           {githubConnected && (
-            <div className="flex items-center gap-2 px-3 py-2 text-xs text-green-400">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-3 px-3 py-2 text-sm text-green-400">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
-              GitHub Connected
+              <span>GitHub Connected</span>
             </div>
           )}
 
@@ -749,67 +753,66 @@ export default function TestPage() {
             <SlackConnectButton />
         </div>
 
-          <button
-            onClick={() => router.push('/dashboard')}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-700 transition-colors text-sm"
-          >
-            <div className="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold">
+          <div className="flex items-center gap-3 px-3 py-2 mt-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-sm font-bold">
               {user?.name?.charAt(0) || 'U'}
-        </div>
-            <span className="flex-1 truncate">{user?.name || 'User'}</span>
-          </button>
-          
-          <button
-            onClick={handleLogout}
-            className="w-full px-3 py-2 text-xs text-red-400 hover:text-red-300 text-center rounded-lg hover:bg-gray-700 transition-colors"
-          >
-            Logout
-          </button>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium">{user?.name || 'User'}</p>
+              <p className="text-xs text-gray-500">Pro</p>
+            </div>
+            <button onClick={handleLogout} className="text-gray-500 hover:text-gray-300">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="4" r="1" fill="currentColor"/>
+                <circle cx="8" cy="8" r="1" fill="currentColor"/>
+                <circle cx="8" cy="12" r="1" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
           </div>
         </div>
 
         {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="h-14 border-b border-gray-700 flex items-center px-4 justify-between">
+        <div className="border-b border-[#1a1a1a] px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowSidebar(!showSidebar)}
-              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <div className="text-sm font-semibold">
-              {selectedProject ? selectedProject.name : 'Feeta AI Task Manager'}
-              </div>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+              <rect x="11" y="3" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+              <rect x="3" y="11" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+              <rect x="11" y="11" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+            </svg>
+            <h1 className="text-lg font-medium">
+              {selectedProject ? selectedProject.name : 'Dashboard'}
+            </h1>
           </div>
           
           {selectedProject && (
             <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-500">Last update 12min ago</span>
               {selectedProject.repo ? (
                 <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
-                  {selectedProject.repo.full_name}
+                  <span>{selectedProject.repo.full_name}</span>
                   <button
                     onClick={() => setShowRepoModal(true)}
                     className="text-blue-400 hover:text-blue-300 ml-2"
                   >
                     Change
                   </button>
-            </div>
-          ) : (
+                </div>
+              ) : (
                 <button
                   onClick={() => setShowRepoModal(true)}
-                  className="text-xs px-3 py-1.5 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-[#1a1a1a] rounded-lg transition-colors"
                 >
                   Connect Repository
                 </button>
-                )}
-              </div>
+              )}
+            </div>
           )}
         </div>
 
@@ -818,12 +821,12 @@ export default function TestPage() {
           {!selectedProject ? (
             <div className="h-full flex flex-col items-center justify-center px-4">
               <h1 className="text-4xl font-semibold mb-4">Welcome to Feeta AI</h1>
-              <p className="text-gray-400 text-center mb-8 max-w-md">
+              <p className="text-gray-500 text-center mb-8 max-w-md">
                 Create a project to start chatting with AI about your tasks
               </p>
               <button
                 onClick={() => setShowCreateModal(true)}
-                className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium transition-colors"
+                className="px-6 py-3 bg-white text-black hover:bg-gray-200 rounded-lg font-medium transition-colors"
               >
                 Create Your First Project
               </button>
@@ -832,17 +835,17 @@ export default function TestPage() {
             <div className="h-full flex flex-col items-center justify-center px-4">
               <div className="max-w-2xl w-full">
                 <h2 className="text-3xl font-semibold mb-4 text-center">Connect a Repository</h2>
-                <p className="text-gray-400 text-center mb-8">
+                <p className="text-gray-500 text-center mb-8">
                   Connect a GitHub repository to provide context for AI task analysis
                 </p>
                 
                 {repos.length === 0 ? (
                   <div className="text-center">
-                    <p className="text-gray-400 mb-4">No repositories found. Please connect GitHub first.</p>
+                    <p className="text-gray-500 mb-4">No repositories found. Please connect GitHub first.</p>
                     {!githubConnected && (
                       <button
                         onClick={connectGithub}
-                        className="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                        className="px-6 py-3 bg-white text-black hover:bg-gray-200 rounded-lg transition-colors font-medium"
                       >
                         Connect GitHub
                       </button>
@@ -854,7 +857,7 @@ export default function TestPage() {
                       <button
                         key={repo.id}
                         onClick={() => connectRepoToProject(repo)}
-                        className="p-4 bg-[#2A2A2A] border border-gray-700 rounded-lg hover:border-purple-500 transition-colors text-left"
+                        className="p-4 bg-[#111111] border border-[#1a1a1a] rounded-lg hover:border-[#2a2a2a] transition-colors text-left"
                       >
                         <div className="font-medium text-sm mb-1">{repo.name}</div>
                         <div className="text-xs text-gray-400">{repo.language || 'Unknown'}</div>
@@ -878,13 +881,13 @@ export default function TestPage() {
                   <button
                     key={i}
                     onClick={() => setInput(item.prompt)}
-                    className="p-4 rounded-xl border border-gray-600 hover:bg-gray-700 transition-colors text-left"
+                    className="p-5 rounded-lg border border-[#1a1a1a] bg-[#111111] hover:border-[#2a2a2a] transition-colors text-left"
                   >
                     <div className="text-sm font-semibold mb-1">{item.title}</div>
-                    <div className="text-xs text-gray-400">{item.desc}</div>
+                    <div className="text-xs text-gray-500">{item.desc}</div>
                   </button>
-                    ))}
-                  </div>
+                ))}
+              </div>
                 </div>
               ) : (
             <div className="max-w-4xl mx-auto py-8 px-4">
@@ -908,9 +911,9 @@ export default function TestPage() {
                 />
               ))}
               {isLoading && (
-                <div className="bg-[#2A2A2A] -mx-4 px-4 py-6">
+                <div className="bg-[#111111] -mx-4 px-4 py-6">
                   <div className="max-w-3xl mx-auto flex gap-4">
-                    <div className="w-8 h-8 rounded-full bg-[#10A37F] flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                       <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -927,15 +930,15 @@ export default function TestPage() {
 
         {/* Input Area */}
         {selectedProject?.repo && (
-          <div className="border-t border-gray-700 p-4">
+          <div className="border-t border-[#1a1a1a] p-4 bg-[#0a0a0a]">
             <div className="max-w-4xl mx-auto">
-              <div className="bg-[#40414F] rounded-2xl border border-gray-600 shadow-lg">
+              <div className="bg-[#111111] rounded-lg border border-[#1a1a1a]">
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyPress}
                   placeholder="Describe what you want to build..."
-                  className="w-full bg-transparent px-4 py-3 focus:outline-none resize-none text-white placeholder-gray-500"
+                  className="w-full bg-transparent px-4 py-3 focus:outline-none resize-none text-white placeholder-gray-600"
                   rows={1}
                   style={{ minHeight: '24px', maxHeight: '200px' }}
                 />
@@ -943,7 +946,7 @@ export default function TestPage() {
                   <button
                     onClick={sendMessage}
                     disabled={!input.trim() || isLoading}
-                    className="p-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
+                    className="p-2 bg-white text-black hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
@@ -951,7 +954,7 @@ export default function TestPage() {
                   </button>
                 </div>
               </div>
-              <div className="text-center text-xs text-gray-500 mt-3">
+              <div className="text-center text-xs text-gray-600 mt-3">
                 Feeta AI can make mistakes. Check important info.
               </div>
             </div>
@@ -962,8 +965,8 @@ export default function TestPage() {
       {/* Modals */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <div className="bg-[#2A2A2A] border border-gray-700 rounded-lg p-6 w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4">Create New Project</h3>
+          <div className="bg-[#111111] border border-[#1a1a1a] rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-xl font-semibold mb-4">Create New Project</h3>
             <input
               type="text"
               value={newProjectName}
@@ -971,12 +974,12 @@ export default function TestPage() {
               onKeyPress={(e) => e.key === 'Enter' && createProject()}
               placeholder="Project name"
               autoFocus
-              className="w-full bg-[#40414F] border border-gray-600 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-purple-500"
+              className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-[#2a2a2a]"
             />
             <div className="flex gap-2">
               <button
                 onClick={createProject}
-                className="flex-1 bg-purple-600 px-4 py-2 rounded-lg hover:bg-purple-700 font-medium transition-colors"
+                className="flex-1 bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 font-medium transition-colors"
               >
                 Create
               </button>
@@ -985,7 +988,7 @@ export default function TestPage() {
                   setShowCreateModal(false);
                   setNewProjectName('');
                 }}
-                className="flex-1 bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                className="flex-1 bg-[#1a1a1a] px-4 py-2 rounded-lg hover:bg-[#222222] transition-colors"
               >
                 Cancel
               </button>
@@ -996,18 +999,18 @@ export default function TestPage() {
 
       {showRepoModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <div className="bg-[#2A2A2A] border border-gray-700 rounded-lg p-6 w-full max-w-3xl max-h-[80vh] flex flex-col">
-            <h3 className="text-xl font-bold mb-4">
+          <div className="bg-[#111111] border border-[#1a1a1a] rounded-lg p-6 w-full max-w-3xl max-h-[80vh] flex flex-col">
+            <h3 className="text-xl font-semibold mb-4">
               {selectedProject?.repo ? 'Change Repository' : 'Select Repository'}
             </h3>
             
             {repos.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-400 mb-4">No repositories found.</p>
+                <p className="text-gray-500 mb-4">No repositories found.</p>
                 {!githubConnected && (
                   <button
                     onClick={connectGithub}
-                    className="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                    className="px-6 py-3 bg-white text-black hover:bg-gray-200 rounded-lg transition-colors font-medium"
                   >
                     Connect GitHub
                   </button>
@@ -1020,7 +1023,7 @@ export default function TestPage() {
                     <button
                       key={repo.id}
                       onClick={() => connectRepoToProject(repo)}
-                      className="p-4 bg-[#343541] border border-gray-600 rounded-lg hover:border-purple-500 transition-colors text-left"
+                      className="p-4 bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg hover:border-[#2a2a2a] transition-colors text-left"
                     >
                       <div className="font-medium text-sm mb-1">{repo.name}</div>
                       <div className="text-xs text-gray-400">{repo.language || 'Unknown'}</div>
@@ -1030,7 +1033,7 @@ export default function TestPage() {
                 </div>
                 <button
                   onClick={() => setShowRepoModal(false)}
-                  className="w-full bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                  className="w-full bg-[#1a1a1a] px-4 py-2 rounded-lg hover:bg-[#222222] transition-colors"
                 >
                   Cancel
                 </button>
@@ -1050,11 +1053,11 @@ function MessageComponent({ message, index, onSubmitAnswers, onAssignAll, channe
   const [localSelectedChannel, setLocalSelectedChannel] = useState(selectedChannel);
 
   return (
-    <div className={`mb-8 ${message.role === 'user' ? '' : 'bg-[#2A2A2A] -mx-4 px-4 py-6'}`}>
+    <div className={`mb-8 ${message.role === 'user' ? '' : 'bg-[#111111] -mx-4 px-4 py-6'}`}>
       <div className="max-w-3xl mx-auto">
         <div className="flex gap-4">
           <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-            message.role === 'user' ? 'bg-purple-600' : 'bg-[#10A37F]'
+            message.role === 'user' ? 'bg-gradient-to-br from-purple-500 to-pink-500' : 'bg-gradient-to-br from-blue-500 to-cyan-500'
           }`}>
             {message.role === 'user' ? (
               <span className="text-sm font-bold">{userName?.charAt(0) || 'U'}</span>
@@ -1076,7 +1079,7 @@ function MessageComponent({ message, index, onSubmitAnswers, onAssignAll, channe
                   const questionText = typeof q === 'string' ? q : q.question;
                   const explanation = typeof q === 'object' ? q.explanation : null;
                   return (
-                    <div key={qi} className="bg-[#343541] rounded-lg p-4">
+                    <div key={qi} className="bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg p-4">
                       <div className="flex items-start gap-2 mb-2">
                         <span className="text-sm font-semibold flex-1">{questionText}</span>
                         {explanation && (
@@ -1098,14 +1101,14 @@ function MessageComponent({ message, index, onSubmitAnswers, onAssignAll, channe
                         type="text"
                         placeholder="Your answer..."
                         onChange={(e) => setAnswers({ ...answers, [`q${qi}`]: e.target.value })}
-                        className="w-full bg-[#40414F] border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500"
+                        className="w-full bg-[#111111] border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#2a2a2a]"
                       />
                     </div>
                   );
                 })}
                 <button
                   onClick={() => onSubmitAnswers(index, answers)}
-                  className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg font-medium"
+                  className="w-full px-4 py-2 bg-white text-black hover:bg-gray-200 rounded-lg font-medium transition-colors"
                 >
                   Submit Answers & Generate Plan
                 </button>
@@ -1114,12 +1117,12 @@ function MessageComponent({ message, index, onSubmitAnswers, onAssignAll, channe
 
             {/* Plan */}
             {message.plan && (
-              <div className="bg-[#343541] rounded-xl p-6 mt-4">
+              <div className="bg-[#0a0a0a] border border-[#1a1a1a] rounded-lg p-6 mt-4">
                 <h3 className="text-lg font-semibold mb-2">{message.plan.main_task}</h3>
                 <p className="text-sm text-gray-400 mb-4">{message.plan.goal}</p>
                 <div className="space-y-3 mb-6">
                   {message.plan.subtasks?.map((subtask, si) => (
-                    <div key={si} className="bg-[#40414F] rounded-lg p-4">
+                    <div key={si} className="bg-[#111111] border border-[#1a1a1a] rounded-lg p-4">
                       <div className="flex justify-between items-start mb-2">
                         <div className="font-semibold text-sm">{si + 1}. {subtask.title}</div>
                         <span className="text-xs text-green-400">{subtask.deadline}</span>
@@ -1135,7 +1138,7 @@ function MessageComponent({ message, index, onSubmitAnswers, onAssignAll, channe
                 </div>
 
                 {/* Global Assignment */}
-                <div className="pt-4 border-t border-gray-600">
+                <div className="pt-4 border-t border-[#1a1a1a]">
                   <h5 className="font-semibold mb-3 text-purple-400">🚀 Assign All to Slack</h5>
                   <div className="flex gap-3">
                     <select
@@ -1144,7 +1147,7 @@ function MessageComponent({ message, index, onSubmitAnswers, onAssignAll, channe
                         setLocalSelectedChannel(e.target.value);
                         setSelectedChannel(e.target.value);
                       }}
-                      className="flex-1 bg-[#40414F] border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500"
+                      className="flex-1 bg-[#111111] border border-[#1a1a1a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#2a2a2a]"
                     >
                       <option value="">-- Select Channel --</option>
                       {channels.map((ch) => (
@@ -1156,7 +1159,7 @@ function MessageComponent({ message, index, onSubmitAnswers, onAssignAll, channe
                     <button
                       onClick={() => onAssignAll(message.plan)}
                       disabled={!localSelectedChannel || sendingAll}
-                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 rounded-lg whitespace-nowrap font-medium"
+                      className="px-4 py-2 bg-white text-black hover:bg-gray-200 disabled:opacity-50 rounded-lg whitespace-nowrap font-medium transition-colors"
                     >
                       {sendingAll ? "Sending..." : `Send ${message.plan.subtasks?.length} Tasks`}
                     </button>

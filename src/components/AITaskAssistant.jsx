@@ -31,7 +31,7 @@ function SubtaskCard({ subtask, index }) {
     setSending(true);
     
     const slackUserId = localStorage.getItem('slack_user_id');
-    const message = `📝 *New Task Assignment*\n\n*Task:* ${subtask.title}\n*Description:* ${subtask.description}\n*Assigned to:* ${subtask.assigned_to}\n*Deadline:* ${subtask.deadline}\n*Output:* ${subtask.output}`;
+    const message = `📝 *New Task Assignment*\n\n*Task:* ${subtask.title || subtask.task}\n*Description:* ${subtask.description}\n*Role:* ${subtask.role || subtask.assigned_to}\n*Deadline:* ${subtask.deadline}\n*Output:* ${subtask.output}`;
     
     try {
       await fetch("https://localhost:5000/api/send_message", {
@@ -54,12 +54,12 @@ function SubtaskCard({ subtask, index }) {
   return (
     <div className="bg-gray-900 p-4 rounded-lg mb-3">
       <div className="flex justify-between mb-2">
-        <strong className="text-sm">{index + 1}. {subtask.title}</strong>
+        <strong className="text-sm">{index + 1}. {subtask.title || subtask.task}</strong>
         <span className="text-xs text-green-400">{subtask.deadline}</span>
       </div>
       <p className="text-xs text-gray-400 mb-2">{subtask.description}</p>
       <div className="flex gap-4 text-xs text-gray-500 mb-3">
-        <span>👤 {subtask.assigned_to}</span>
+        <span>👤 {subtask.role || subtask.assigned_to}</span>
         <span>📦 {subtask.output}</span>
         <span>✅ {subtask.clarity_score}%</span>
       </div>
@@ -107,7 +107,7 @@ function SubtaskCard({ subtask, index }) {
   );
 }
 
-export default function AITaskAssistant({ repo, githubToken }) {
+export default function AITaskAssistant({ repos, githubToken }) {
   const [task, setTask] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [status, setStatus] = useState("idle");
@@ -195,7 +195,7 @@ export default function AITaskAssistant({ repo, githubToken }) {
       // Send each subtask
       for (let i = 0; i < plan.subtasks.length; i++) {
         const subtask = plan.subtasks[i];
-        const message = `📝 *Task ${i + 1}/${plan.subtasks.length}: ${subtask.title}*\n\n*Description:* ${subtask.description}\n*Assigned to:* ${subtask.assigned_to}\n*Deadline:* ${subtask.deadline}\n*Expected Output:* ${subtask.output}\n*Clarity Score:* ${subtask.clarity_score}%`;
+        const message = `📝 *Task ${i + 1}/${plan.subtasks.length}: ${subtask.title || subtask.task}*\n\n*Description:* ${subtask.description}\n*Role:* ${subtask.role || subtask.assigned_to}\n*Deadline:* ${subtask.deadline}\n*Expected Output:* ${subtask.output}\n*Clarity Score:* ${subtask.clarity_score}%`;
         
         await fetch("https://localhost:5000/api/send_message", {
           method: "POST",
@@ -233,14 +233,28 @@ export default function AITaskAssistant({ repo, githubToken }) {
   };
 
   const analyzeTask = async () => {
-    addLog("🚀 Starting task analysis with repo context...");
+    addLog("🚀 Starting task analysis with repository context...");
     setStatus("analyzing");
     
     try {
-      const [owner, repoName] = repo?.full_name?.split('/') || [];
+      // Support both single repo (legacy) and multiple repos
+      let repositories = [];
+      if (repos && Array.isArray(repos)) {
+        repositories = repos.map(repo => {
+          const [owner, repoName] = repo?.full_name?.split('/') || [];
+          return { owner, repo: repoName, type: repo.type || 'unknown' };
+        });
+        addLog(`📦 Analyzing ${repositories.length} repositories`);
+        repositories.forEach((r, i) => {
+          addLog(`  ${i + 1}. ${r.owner}/${r.repo} (${r.type})`);
+        });
+      } else if (repos?.full_name) {
+        // Single repo fallback
+        const [owner, repoName] = repos.full_name.split('/');
+        repositories = [{ owner, repo: repoName, type: 'unknown' }];
+        addLog(`📦 Analyzing single repo: ${owner}/${repoName}`);
+      }
       
-      addLog("📡 Calling /api/analyze endpoint");
-      addLog(`📦 Analyzing repo: ${owner}/${repoName}`);
       if (sessionId) {
         addLog(`🔄 Continuing session: ${sessionId}`);
       }
@@ -250,9 +264,8 @@ export default function AITaskAssistant({ repo, githubToken }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           task,
-          session_id: sessionId,  // Pass existing session ID if available
-          owner,
-          repo: repoName,
+          session_id: sessionId,
+          repositories,  // Send array of repositories
           github_token: githubToken
         }),
       });

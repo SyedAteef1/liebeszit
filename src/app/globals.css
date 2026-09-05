@@ -37,6 +37,10 @@ body {
   font-family: var(--font-inter);
 }
 
+.font-display {
+  font-family: var(--font-fraunces), Georgia, 'Times New Roman', serif;
+}
+
 /* Smooth transitions for interactive elements */
 button, a {
   transition: all 0.2s ease-in-out;

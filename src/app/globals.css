@@ -38,7 +38,7 @@ body {
 }
 
 .font-display {
-  font-family: var(--font-fraunces), Georgia, 'Times New Roman', serif;
+  font-family: var(--font-cormorant), Georgia, 'Times New Roman', serif;
 }
 
 /* Smooth transitions for interactive elements */

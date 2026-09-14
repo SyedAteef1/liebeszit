@@ -2,45 +2,127 @@
 
 import { useEffect, useState } from "react"
 
-// TODO: replace with Martin's real contact email address
-const CONTACT_EMAIL = "hallo@liebeszit.ch"
+const EMAIL = "liebeszit@proton.me"
+const PHONE_DISPLAY = "+41 79 828 00 36"
+const PHONE_TEL = "+41798280036"
+
+const BANK = {
+  iban: "CH1608307000558059309",
+  ibanPretty: "CH16 0830 7000 5580 5930 9",
+  bic: "HYPLCH22",
+  name: "Liebeszit",
+  bank: "Hypothekarbank Lenzburg AG",
+}
+
+const TABS = ["support", "help", "theory", "login"]
 
 const translations = {
   de: {
-    eyebrow: "Liebeszit",
-    titleLine1: "Zeit für Liebe.",
-    titleLine2: "Zeit zu helfen.",
-    subtitle:
-      "Martin hilft Menschen in schwierigen Momenten – ohne grosse Worte, einfach mit Herz. Melde dich, wenn du unterstützen möchtest: Wir schicken dir die Spendendetails persönlich zu.",
-    formName: "Dein Name",
-    formEmail: "Deine E-Mail",
-    formMessage: "Deine Nachricht",
-    formMessagePlaceholder: "Ich möchte gerne helfen…",
-    submit: "Nachricht senden",
-    submitNote: "Beim Absenden öffnet sich dein E-Mail-Programm mit einer vorausgefüllten Nachricht.",
-    orDirect: "Oder schreib uns direkt an",
-    tagline: "Mit ♥ von Martin.",
+    tabs: {
+      support: "Unterstütze uns!",
+      help: "Brauchst du Hilfe?",
+      theory: "Theorie und Aktion",
+      login: "Mitglieder-Login",
+    },
+    support: {
+      headline: "Wir haben den Funken – deine Spende ist der Treibstoff!",
+      bankTitle: "Bankverbindung",
+      labels: { iban: "IBAN", bic: "BIC", name: "Name", bank: "Bank" },
+      copy: "Kopieren",
+      copied: "Kopiert!",
+      twintTitle: "Twint",
+      twintNote: "(1,4 % Gebühren)",
+      other:
+        "Wenn du etwas anderes spenden möchtest (Sachwerte, Immobilien, Bitcoins usw.) oder deine kostbare Zeit mit Liebeszit teilen willst, melde dich bei uns …",
+      gratitude: "Für jede Spende erhältst du die Dankbarkeit und den Segen von Liebeszit!",
+      thanks: "Danke!",
+    },
+    help: {
+      headline: "Können wir dich unterstützen?",
+      questions: [
+        "Hast du Fragen zu Liebe und Leben?",
+        "Spürst du, dass du auf deinem persönlichen Weg Unterstützung brauchst?",
+        "Bist du neugierig, was hinter all dem «Liebeszit» steckt?",
+      ],
+      cta: "Schreib uns!",
+    },
+    theory: {
+      headline: "Theorie und Aktion",
+      note: "Mehr folgt in Kürze.",
+    },
+    login: {
+      headline: "Mitglieder-Login",
+      username: "Benutzername",
+      password: "Passwort",
+      submit: "Anmelden",
+      inactive: "Der Mitglieder-Login ist noch nicht aktiv.",
+      joinIntro: "Möchtest du aktiv mitmachen? Schreib uns über dich:",
+    },
   },
   en: {
-    eyebrow: "Liebeszit",
-    titleLine1: "Time for love.",
-    titleLine2: "Time to help.",
-    subtitle:
-      "Martin helps people through difficult moments — quietly, and with heart. Reach out if you'd like to support: we'll send you the payment details personally.",
-    formName: "Your name",
-    formEmail: "Your email",
-    formMessage: "Your message",
-    formMessagePlaceholder: "I'd like to help…",
-    submit: "Send message",
-    submitNote: "Sending this opens your email app with a pre-filled message.",
-    orDirect: "Or email us directly at",
-    tagline: "Made with ♥ by Martin.",
+    tabs: {
+      support: "Support Us!",
+      help: "Need Support?",
+      theory: "Theory and Action",
+      login: "Member Login",
+    },
+    support: {
+      headline: "We got the Spark, your donation is the Fuel!",
+      bankTitle: "Bank transfer",
+      labels: { iban: "IBAN", bic: "BIC", name: "Name", bank: "Bank" },
+      copy: "Copy",
+      copied: "Copied!",
+      twintTitle: "Twint",
+      twintNote: "(1.4% fees)",
+      other:
+        "If you have anything else to donate (goods, properties, bitcoins, etc.) or you want to share your own precious time with Liebeszit, please get in touch …",
+      gratitude: "For every donation you are receiving the gratitude and blessings of Liebeszit!",
+      thanks: "Thank You!",
+    },
+    help: {
+      headline: "Can we support You?",
+      questions: [
+        "You have questions about love and life?",
+        "You feel you need support in your personal journey?",
+        "You're curious about what's behind all this “Liebeszit”?",
+      ],
+      cta: "Drop us a message!",
+    },
+    theory: {
+      headline: "Theory and Action",
+      note: "More is coming soon.",
+    },
+    login: {
+      headline: "Member Login",
+      username: "Username",
+      password: "Password",
+      submit: "Log in",
+      inactive: "Member login is not active yet.",
+      joinIntro: "Want to become an active Participant? Write us about You:",
+    },
   },
+}
+
+// Swiss German — intentionally the same in both languages
+const THEORY_QUOTE = "Du besch det wo de Floss vo de Zit ufd Onändlechkeit trefft!"
+
+function Contact() {
+  return (
+    <div className="flex flex-col gap-1">
+      <a href={`tel:${PHONE_TEL}`} className="text-[#FAED61] transition-colors hover:text-white">
+        {PHONE_DISPLAY}
+      </a>
+      <a href={`mailto:${EMAIL}`} className="text-[#FAED61] transition-colors hover:text-white">
+        {EMAIL}
+      </a>
+    </div>
+  )
 }
 
 export default function Home() {
   const [lang, setLang] = useState("de")
-  const [form, setForm] = useState({ name: "", email: "", message: "" })
+  const [tab, setTab] = useState("support")
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     const saved = window.localStorage.getItem("liebeszit-lang")
@@ -61,108 +143,205 @@ export default function Home() {
     window.localStorage.setItem("liebeszit-lang", next)
   }
 
-  const t = translations[lang]
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    const subject = encodeURIComponent(
-      lang === "de" ? `Liebeszit – Nachricht von ${form.name || "der Website"}` : `Liebeszit – message from ${form.name || "the website"}`
-    )
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`)
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
+  async function copyIban() {
+    await navigator.clipboard.writeText(BANK.iban)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
+  const t = translations[lang]
+
   return (
-    <div className="flex min-h-screen flex-col bg-[#FFF8F3] text-[#241C1C]">
-      <section className="relative flex flex-1 items-center overflow-hidden px-6 py-10">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#D6435D]/15 blur-3xl"
-        />
-
-        <div className="relative mx-auto w-full max-w-5xl">
-          <div className="mb-8 flex items-center justify-between">
-            <span className="font-display flex items-center gap-2 text-lg font-semibold tracking-tight">
-              <img src="/liebeszit-mark.svg" alt="" className="h-6 w-6" />
-              Liebeszit
-            </span>
-            <div className="flex items-center gap-1 rounded-full border border-black/10 p-1 text-xs font-medium">
-              {["de", "en"].map((code) => (
-                <button
-                  key={code}
-                  onClick={() => changeLang(code)}
-                  className={`rounded-full px-2.5 py-1 transition-colors ${
-                    lang === code ? "bg-[#241C1C] text-white" : "text-[#241C1C]/60 hover:text-[#241C1C]"
-                  }`}
-                  aria-pressed={lang === code}
-                >
-                  {code.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-10 sm:grid-cols-2 sm:items-center">
-            <div>
-              <p className="font-display mb-3 text-sm italic tracking-wide text-[#D6435D]">{t.eyebrow}</p>
-              <h1 className="font-display text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl">
-                {t.titleLine1}
-                <br />
-                {t.titleLine2}
-              </h1>
-              <p className="mt-5 max-w-md text-[#241C1C]/70">{t.subtitle}</p>
-              <p className="mt-6 text-sm text-[#241C1C]/60">{t.orDirect}</p>
-              <a href={`mailto:${CONTACT_EMAIL}`} className="inline-block font-medium text-[#D6435D] underline">
-                {CONTACT_EMAIL}
-              </a>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-3 rounded-2xl border border-black/10 bg-white p-6">
-              <div>
-                <label className="mb-1 block text-sm font-medium">{t.formName}</label>
-                <input
-                  required
-                  type="text"
-                  value={form.name}
-                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  className="w-full rounded-lg border border-black/10 px-3 py-2 outline-none focus:border-[#D6435D]"
-                />
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium">{t.formEmail}</label>
-                <input
-                  required
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                  className="w-full rounded-lg border border-black/10 px-3 py-2 outline-none focus:border-[#D6435D]"
-                />
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium">{t.formMessage}</label>
-                <textarea
-                  required
-                  rows={3}
-                  placeholder={t.formMessagePlaceholder}
-                  value={form.message}
-                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  className="w-full rounded-lg border border-black/10 px-3 py-2 outline-none focus:border-[#D6435D]"
-                />
-              </div>
+    <div className="flex min-h-screen flex-col bg-black text-[#EDE9DC]">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-8 sm:py-12">
+        <div className="mb-6 flex justify-end">
+          <div className="flex items-center gap-1 rounded-full border border-[#C4B514]/30 p-1 text-xs font-medium">
+            {["de", "en"].map((code) => (
               <button
-                type="submit"
-                className="w-full rounded-full bg-[#D6435D] px-6 py-2.5 font-medium text-white transition-transform hover:-translate-y-0.5"
+                key={code}
+                onClick={() => changeLang(code)}
+                className={`rounded-full px-2.5 py-1 transition-colors ${
+                  lang === code ? "bg-[#C4B514] text-black" : "text-[#EDE9DC]/50 hover:text-[#EDE9DC]"
+                }`}
+                aria-pressed={lang === code}
               >
-                {t.submit}
+                {code.toUpperCase()}
               </button>
-              <p className="text-xs text-[#241C1C]/50">{t.submitNote}</p>
-            </form>
+            ))}
           </div>
         </div>
-      </section>
 
-      <footer className="border-t border-black/5 px-6 py-4 text-center text-xs text-[#241C1C]/60">
-        {t.tagline}
+        <header className="flex flex-col items-center text-center">
+          <img
+            src="/liebeszit-logo.jpg"
+            alt="Liebeszit"
+            className="h-24 w-auto sm:h-28"
+          />
+          <h1 className="font-display mt-3 text-4xl font-light tracking-[0.18em] text-[#C4B514] sm:text-5xl">
+            Liebeszit
+          </h1>
+        </header>
+
+        <nav className="mt-8 flex flex-wrap justify-center gap-2">
+          {TABS.map((key) => (
+            <button
+              key={key}
+              onClick={() => setTab(key)}
+              className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                tab === key
+                  ? "border-[#C4B514] bg-[#C4B514] font-medium text-black"
+                  : "border-[#C4B514]/30 text-[#EDE9DC]/75 hover:border-[#C4B514]/70 hover:text-[#EDE9DC]"
+              }`}
+              aria-pressed={tab === key}
+            >
+              {t.tabs[key]}
+            </button>
+          ))}
+        </nav>
+
+        <section className="mt-8 rounded-2xl border border-[#C4B514]/25 bg-[#0A0A0A] p-6 sm:p-8">
+          {tab === "support" && (
+            <div className="space-y-7">
+              <h2 className="font-display text-2xl leading-snug text-[#FAED61] sm:text-3xl">
+                {t.support.headline}
+              </h2>
+
+              <div className="grid gap-7 sm:grid-cols-2">
+                <div>
+                  <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#C4B514]">
+                    {t.support.bankTitle}
+                  </h3>
+                  <dl className="space-y-2 text-sm">
+                    <div>
+                      <dt className="text-[#EDE9DC]/50">{t.support.labels.iban}</dt>
+                      <dd className="flex flex-wrap items-center gap-2">
+                        <span className="font-mono tracking-tight">{BANK.ibanPretty}</span>
+                        <button
+                          onClick={copyIban}
+                          className="rounded-full border border-[#C4B514]/40 px-2 py-0.5 text-xs text-[#C4B514] transition-colors hover:bg-[#C4B514] hover:text-black"
+                        >
+                          {copied ? t.support.copied : t.support.copy}
+                        </button>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[#EDE9DC]/50">{t.support.labels.bic}</dt>
+                      <dd className="font-mono">{BANK.bic}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[#EDE9DC]/50">{t.support.labels.name}</dt>
+                      <dd>{BANK.name}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[#EDE9DC]/50">{t.support.labels.bank}</dt>
+                      <dd>{BANK.bank}</dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <div>
+                  <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#C4B514]">
+                    {t.support.twintTitle}{" "}
+                    <span className="font-normal normal-case tracking-normal text-[#EDE9DC]/50">
+                      {t.support.twintNote}
+                    </span>
+                  </h3>
+                  <img
+                    src="/liebeszit-twint-qr.jpg"
+                    alt={`Twint QR – ${BANK.name}`}
+                    className="w-44 rounded-lg bg-white p-2"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3 border-t border-[#C4B514]/20 pt-6 text-sm">
+                <p className="text-[#EDE9DC]/75">{t.support.other}</p>
+                <Contact />
+              </div>
+
+              <div className="space-y-1 border-t border-[#C4B514]/20 pt-6">
+                <p className="text-[#EDE9DC]/75">{t.support.gratitude}</p>
+                <p className="font-display text-2xl text-[#FAED61]">{t.support.thanks}</p>
+              </div>
+            </div>
+          )}
+
+          {tab === "help" && (
+            <div className="space-y-6">
+              <h2 className="font-display text-2xl text-[#FAED61] sm:text-3xl">{t.help.headline}</h2>
+              <ul className="space-y-2 text-[#EDE9DC]/75">
+                {t.help.questions.map((q) => (
+                  <li key={q}>{q}</li>
+                ))}
+              </ul>
+              <div className="space-y-3 border-t border-[#C4B514]/20 pt-6">
+                <p className="font-display text-xl text-[#FAED61]">{t.help.cta}</p>
+                <Contact />
+              </div>
+            </div>
+          )}
+
+          {tab === "theory" && (
+            <div className="space-y-6">
+              <h2 className="font-display text-2xl text-[#FAED61] sm:text-3xl">{t.theory.headline}</h2>
+              <p className="font-display text-xl italic leading-relaxed text-[#EDE9DC] sm:text-2xl">
+                “{THEORY_QUOTE}”
+              </p>
+              <p className="text-sm text-[#EDE9DC]/50">{t.theory.note}</p>
+            </div>
+          )}
+
+          {tab === "login" && (
+            <div className="space-y-6">
+              <h2 className="font-display text-2xl text-[#FAED61] sm:text-3xl">{t.login.headline}</h2>
+
+              {/* Placeholder UI: no auth backend exists yet, so nothing is submitted anywhere. */}
+              <form onSubmit={(e) => e.preventDefault()} className="max-w-sm space-y-3">
+                <div>
+                  <label htmlFor="username" className="mb-1 block text-sm text-[#EDE9DC]/60">
+                    {t.login.username}
+                  </label>
+                  <input
+                    id="username"
+                    type="text"
+                    disabled
+                    className="w-full rounded-lg border border-[#C4B514]/25 bg-black px-3 py-2 text-[#EDE9DC] outline-none focus:border-[#C4B514] disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="password" className="mb-1 block text-sm text-[#EDE9DC]/60">
+                    {t.login.password}
+                  </label>
+                  <input
+                    id="password"
+                    type="password"
+                    disabled
+                    className="w-full rounded-lg border border-[#C4B514]/25 bg-black px-3 py-2 text-[#EDE9DC] outline-none focus:border-[#C4B514] disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled
+                  className="w-full rounded-full bg-[#C4B514] px-6 py-2.5 font-medium text-black disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {t.login.submit}
+                </button>
+                <p className="text-xs text-[#EDE9DC]/45">{t.login.inactive}</p>
+              </form>
+
+              <div className="space-y-2 border-t border-[#C4B514]/20 pt-6 text-sm">
+                <p className="text-[#EDE9DC]/75">{t.login.joinIntro}</p>
+                <a href={`mailto:${EMAIL}`} className="text-[#FAED61] transition-colors hover:text-white">
+                  {EMAIL}
+                </a>
+              </div>
+            </div>
+          )}
+        </section>
+      </main>
+
+      <footer className="border-t border-[#C4B514]/15 px-5 py-5 text-center text-xs text-[#EDE9DC]/40">
+        Liebeszit · {PHONE_DISPLAY} · {EMAIL}
       </footer>
     </div>
   )
